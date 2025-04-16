@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLRestriction;
 
 @NoArgsConstructor
 @Getter
@@ -22,10 +23,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productSeq")
     private Long id;
 
-    @Column(name = "product_name", length = 30)
+    @Column(name = "product_name", length = 30) //todo nullable...
+//  @Pattern(regexp = "^[a-zA-Z]{3,30}$",message = "invalid name!")
     private String name;
 
     @Column(name = "price", length = 30)
+//    @Pattern(regexp = "^[0-9]{2,30}$",message = "invalid price")
     @Min(value = 0, message = "Cant be negative")
     private Float price;
 
@@ -35,5 +38,9 @@ public class Product {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "p_group")
     private ProductGroup productGroup;
+
+    @Column(name = "is_deleted")
+    @SQLRestriction("deleted=false")
+    private Boolean isDeleted = false;
 
 }

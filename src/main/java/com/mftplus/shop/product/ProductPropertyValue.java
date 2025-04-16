@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLRestriction;
 
 @NoArgsConstructor
 @Setter
@@ -22,11 +23,20 @@ public class ProductPropertyValue {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_properties_group_seq")
     private Long id;
 
-    @Column(name = "property_value_name")
+    @Column(name = "name")
     private String name;
+    //    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+//    private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "value_info")
-    private GroupProperty groupProperty;
+    @Column(name = "param_value")
+    private String value;
+
+    @Column(name = "is_deleted")
+    @SQLRestriction("deleted=false")
+    private Boolean isDeleted = false;
+
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "groupProperty_info")
+//    private GroupProperty groupProperty;
 
 }

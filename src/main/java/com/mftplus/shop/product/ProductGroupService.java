@@ -1,5 +1,6 @@
 package com.mftplus.shop.product;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,4 +33,9 @@ public class ProductGroupService {
     public void deleteById(Long id) {
         productGroupRepository.deleteById(id);
     }
+
+    public ProductGroup findByParent(String name) {
+        return productGroupRepository.findByParent(name);
+    }
+
 }

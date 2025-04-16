@@ -26,9 +26,9 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderItemSeq")
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "item_product_TBL")
-    private List<Product> product;
+    private Product product;
 
     @Transient
     private double amount;

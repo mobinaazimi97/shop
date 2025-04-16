@@ -9,7 +9,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -43,9 +42,9 @@ public class InventoryProduct {
     @JsonProperty("شماره تماس")
     private String phone;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "product_in_inventory", foreignKey = @ForeignKey(name = "fk-product"))
     @JsonProperty("کالا")
-    private List<Product> products;
+    private Product products;
 
 }
