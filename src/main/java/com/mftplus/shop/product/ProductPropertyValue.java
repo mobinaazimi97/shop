@@ -17,6 +17,7 @@ import org.hibernate.annotations.SQLRestriction;
 
 @Entity(name = "productProEntity")
 @Table(name = "product_properties_values")
+@Cacheable
 public class ProductPropertyValue {
     @Id
     @SequenceGenerator(name = "productPropertiesGroupSeq", sequenceName = "product_properties_group_seq", allocationSize = 1)

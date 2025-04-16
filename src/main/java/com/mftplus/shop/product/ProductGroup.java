@@ -23,6 +23,7 @@ import java.util.List;
 
 @Entity(name = "productGroupEntity")
 @Table(name = "productGroup_tbl")
+@Cacheable
 public class ProductGroup {
     @Id
     @SequenceGenerator(name = "productGroupSeq", sequenceName = "productGroup_seq", allocationSize = 1)
@@ -44,7 +45,7 @@ public class ProductGroup {
     private ProductGroup parent;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JsonIgnore
+//    @JsonIgnore
     private GroupProperty groupProperty;
 
     @Column(name = "is_deleted")

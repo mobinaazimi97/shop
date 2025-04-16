@@ -18,7 +18,8 @@ import java.util.List;
 @SuperBuilder
 @ToString
 @Entity(name = "groupProEntity")
-@Table(name = "group_property")
+@Table(name = "group_property_tbl")
+@Cacheable
 public class GroupProperty {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
