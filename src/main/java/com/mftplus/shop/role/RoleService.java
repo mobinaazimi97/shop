@@ -1,6 +1,6 @@
 package com.mftplus.shop.role;
 
-import com.mftplus.shop.user.service.UserService;
+import com.mftplus.shop.user.service.UserService_old;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class RoleService {
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserService_old.class);
 
 
     private final RoleRepository roleRepository;

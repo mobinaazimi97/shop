@@ -1,7 +1,7 @@
 package com.mftplus.shop.user;
 
 import com.mftplus.shop.user.dto.UserDto;
-import com.mftplus.shop.user.service.UserService;
+import com.mftplus.shop.user.service.UserService_old;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserService_old userService;
 
     @GetMapping
     public List<UserDto> getUsers() {

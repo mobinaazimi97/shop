@@ -1,13 +1,9 @@
 package com.mftplus.shop;
 
 
-import com.mftplus.shop.enums.InventoryStatus;
-import com.mftplus.shop.inventory.InventoryProduct;
 import com.mftplus.shop.inventory.InventoryProductService;
-import com.mftplus.shop.inventory.InventoryTransaction;
 import com.mftplus.shop.inventory.InventoryTransactionService;
 import com.mftplus.shop.order.*;
-import com.mftplus.shop.orderItem.OrderItem;
 import com.mftplus.shop.permission.Permission;
 import com.mftplus.shop.permission.PermissionService;
 import com.mftplus.shop.product.*;
@@ -17,15 +13,10 @@ import com.mftplus.shop.role.RoleService;
 import com.mftplus.shop.user.User;
 import com.mftplus.shop.user.dto.UserDto;
 import com.mftplus.shop.user.mapper.UserMapper;
-import com.mftplus.shop.user.service.UserService;
+import com.mftplus.shop.user.service.UserService_old;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -39,7 +30,7 @@ public class FirstData implements CommandLineRunner {
     private final InventoryTransactionService inventoryTransactionService;
     private final PermissionService permissionService;
     private final RoleService roleService;
-    private final UserService userService;
+    private final UserService_old userService;
     private final UserMapper userMapper;
     private final ProductGroupServiceDto productGroupServiceDto;
     private final ProductDtoService productDtoService;
@@ -47,7 +38,7 @@ public class FirstData implements CommandLineRunner {
     private final GroupPropertyServiceDto groupPropertyServiceDto;
 
 
-    public FirstData(OrderServiceImpl orderServiceImpl, ProductService productService, GroupPropertyService groupPropertyService, ProductGroupService productGroupService, ProductPropertyValueService productPropertyValueService, InventoryProductService inventoryProductService, InventoryTransactionService inventoryTransactionService, PermissionService permissionService, RoleService roleService, UserService userService, UserMapper userMapper, ProductGroupServiceDto productGroupServiceDto, ProductDtoService productDtoService, ProductPropertyValueServiceDto productPropertyValueServiceDto, GroupPropertyServiceDto groupPropertyServiceDto) {
+    public FirstData(OrderServiceImpl orderServiceImpl, ProductService productService, GroupPropertyService groupPropertyService, ProductGroupService productGroupService, ProductPropertyValueService productPropertyValueService, InventoryProductService inventoryProductService, InventoryTransactionService inventoryTransactionService, PermissionService permissionService, RoleService roleService, UserService_old userService, UserMapper userMapper, ProductGroupServiceDto productGroupServiceDto, ProductDtoService productDtoService, ProductPropertyValueServiceDto productPropertyValueServiceDto, GroupPropertyServiceDto groupPropertyServiceDto) {
         this.orderServiceImpl = orderServiceImpl;
         this.productService = productService;
         this.groupPropertyService = groupPropertyService;
