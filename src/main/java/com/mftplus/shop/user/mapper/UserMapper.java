@@ -1,4 +1,4 @@
-package com.mftplus.shop.user.dto.mapper;
+package com.mftplus.shop.user.mapper;
 
 import com.mftplus.shop.config.CentralMapperConfig;
 import com.mftplus.shop.user.User;
