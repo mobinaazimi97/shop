@@ -1,6 +1,7 @@
 package com.mftplus.shop.user;
 
 import com.mftplus.shop.user.dto.UserDto;
+import com.mftplus.shop.user.service.UserService;
 import com.mftplus.shop.user.service.UserService_old;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService_old userService;
+    private final UserService userService;
 
     @GetMapping
     public List<UserDto> getUsers() {
@@ -23,6 +24,13 @@ public class UserController {
     public UserDto getUser(@PathVariable long id) {
         return userService.findById(id);
     }
+
+
+    @GetMapping("/username/{username}")
+    public UserDto getUserByUsername(@PathVariable String username) {
+        return userService.findByUsername(username);
+    }
+
 
     @PostMapping
     public UserDto createUser(@RequestBody @Valid UserDto userDto) {
