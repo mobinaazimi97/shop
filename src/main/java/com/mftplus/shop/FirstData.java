@@ -15,6 +15,8 @@ import com.mftplus.shop.product.dto.*;
 import com.mftplus.shop.role.Role;
 import com.mftplus.shop.role.RoleService;
 import com.mftplus.shop.user.User;
+import com.mftplus.shop.user.dto.UserDto;
+import com.mftplus.shop.user.mapper.UserMapper;
 import com.mftplus.shop.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -38,13 +40,14 @@ public class FirstData implements CommandLineRunner {
     private final PermissionService permissionService;
     private final RoleService roleService;
     private final UserService userService;
+    private final UserMapper userMapper;
     private final ProductGroupServiceDto productGroupServiceDto;
     private final ProductDtoService productDtoService;
     private final ProductPropertyValueServiceDto productPropertyValueServiceDto;
     private final GroupPropertyServiceDto groupPropertyServiceDto;
 
 
-    public FirstData(OrderServiceImpl orderServiceImpl, ProductService productService, GroupPropertyService groupPropertyService, ProductGroupService productGroupService, ProductPropertyValueService productPropertyValueService, InventoryProductService inventoryProductService, InventoryTransactionService inventoryTransactionService, PermissionService permissionService, RoleService roleService, UserService userService, ProductGroupServiceDto productGroupServiceDto, ProductDtoService productDtoService, ProductPropertyValueServiceDto productPropertyValueServiceDto, GroupPropertyServiceDto groupPropertyServiceDto) {
+    public FirstData(OrderServiceImpl orderServiceImpl, ProductService productService, GroupPropertyService groupPropertyService, ProductGroupService productGroupService, ProductPropertyValueService productPropertyValueService, InventoryProductService inventoryProductService, InventoryTransactionService inventoryTransactionService, PermissionService permissionService, RoleService roleService, UserService userService, UserMapper userMapper, ProductGroupServiceDto productGroupServiceDto, ProductDtoService productDtoService, ProductPropertyValueServiceDto productPropertyValueServiceDto, GroupPropertyServiceDto groupPropertyServiceDto) {
         this.orderServiceImpl = orderServiceImpl;
         this.productService = productService;
         this.groupPropertyService = groupPropertyService;
@@ -55,6 +58,7 @@ public class FirstData implements CommandLineRunner {
         this.permissionService = permissionService;
         this.roleService = roleService;
         this.userService = userService;
+        this.userMapper = userMapper;
         this.productGroupServiceDto = productGroupServiceDto;
         this.productDtoService = productDtoService;
         this.productPropertyValueServiceDto = productPropertyValueServiceDto;
@@ -66,23 +70,29 @@ public class FirstData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-//        Permission permission = Permission.builder().permissionName("BUY_PRODUCT").build();
-//        permissionService.save(permission);
-//
-//        Role role = Role.builder().roleName("Customer").permissions(Set.of(permission)).build();
-//        roleService.save(role);
-//
-//        User user = User.builder().username("alex").password("al123").roleSet(Set.of(role)).accountNonExpired(true).email("www.aaa.com").build();
-////        userService(user);
-//
-//        Permission permission1 = Permission.builder().permissionName("BUY_PRODUCT_BY").build();
-//        permissionService.save(permission1);
-//
-//        Role role1 = Role.builder().roleName("Customer").permissions(Set.of(permission1)).build();
-//        roleService.save(role1);
-//
-//        User user1 = User.builder().username("sun").password("ss123").roleSet(Set.of(role1)).accountNonExpired(true).email("www.aaa.com").build();
-////        userService.save(user1);
+        Permission permission = Permission.builder().permissionName("BUY_PRODUCT").build();
+        permissionService.save(permission);
+
+        Role role = Role.builder().roleName("Customer").permissions(Set.of(permission)).build();
+        roleService.save(role);
+
+        User user = User.builder().username("alex").password("al123").roleSet(Set.of(role)).accountNonExpired(true).email("www.aaa.com").build();
+//        userService(user);
+
+        Permission permission1 = Permission.builder().permissionName("BUY_PRODUCT_BY").build();
+        permissionService.save(permission1);
+
+        Role role1 = Role.builder().roleName("Customer").permissions(Set.of(permission1)).build();
+        roleService.save(role1);
+
+        User user1 = User.builder().username("sun").password("ss123").roleSet(Set.of(role1)).accountNonExpired(true).email("www.aaa.com").build();
+        User user2 = User.builder().username("mahdiar").password("mm123").roleSet(Set.of(role1)).accountNonExpired(true).email("www.mahdiar.com").build();
+        User user3 = User.builder().username("mobina").password("m456").roleSet(Set.of(role1)).accountNonExpired(true).email("www.mobina.com").build();
+        UserDto userDto1 = userMapper.toDto(user1);
+        UserDto userDto2 = userMapper.toDto(user2);
+        UserDto userDto3 = userMapper.toDto(user3);
+//        System.out.println(userDto1);
+//        userService.save(userDto1);
 //        -------------------------------------------------------------------------------------------------------------------------------------------
         // Product_Test
 
@@ -99,15 +109,15 @@ public class FirstData implements CommandLineRunner {
 //        ProductGroup productGroup = ProductGroup.builder().groupProperty(groupProperty).name("laptop").parent(parent2).build();
 //        productGroupService.save(productGroup);
 
-        ProductDto productDto = ProductDto.builder()
-                .name("laptop")
-                .price(20F)
-//                .productGroupDto(productGroup)
-                .productCode(1L)
-                .build();
-        productService.save(productDto);
-//        productService
-        System.out.println("product DTO :"+productDto);
+//        ProductDto productDto = ProductDto.builder()
+//                .name("laptop")
+//                .price(20F)
+////                .productGroupDto(productGroup)
+//                .productCode(1L)
+//                .build();
+//        productService.save(productDto);
+////        productService
+//        System.out.println("product DTO :"+productDto);
 //                System.out.println("Parent of productGroup :"+productGroupService.findByParent(String.valueOf(productGroup.getParent())));
 
 //        ProductPropertyValue productPropertyValue = ProductPropertyValue.builder().value("64G").build();

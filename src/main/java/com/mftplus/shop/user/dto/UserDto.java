@@ -12,5 +12,6 @@ import lombok.experimental.SuperBuilder;
 @ToString
 public class UserDto {
     private String username;
+    private String password;
     private String email;
 }

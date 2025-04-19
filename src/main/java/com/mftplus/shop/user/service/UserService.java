@@ -47,7 +47,7 @@ public class UserService {
     public UserDto update(long id, UserDto userDto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User Not Found!"));
-        userMapper.updateUserFromUserDto(userDto, user);
+        userMapper.updateFromDto(userDto, user);
         return userMapper.toDto(userRepository.save(user));
     }
 
