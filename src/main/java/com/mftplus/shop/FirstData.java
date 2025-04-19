@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -65,47 +66,48 @@ public class FirstData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-        Permission permission = Permission.builder().permissionName("BUY_PRODUCT").build();
-        permissionService.save(permission);
-
-        Role role = Role.builder().roleName("Customer").permissions(Set.of(permission)).build();
-        roleService.save(role);
-
-        User user = User.builder().username("alex").password("al123").roleSet(Set.of(role)).accountNonExpired(true).email("www.aaa.com").build();
-        userService.save(user);
-
-        Permission permission1 = Permission.builder().permissionName("BUY_PRODUCT_BY").build();
-        permissionService.save(permission1);
-
-        Role role1 = Role.builder().roleName("Customer").permissions(Set.of(permission1)).build();
-        roleService.save(role1);
-
-        User user1 = User.builder().username("sun").password("ss123").roleSet(Set.of(role1)).accountNonExpired(true).email("www.aaa.com").build();
-        userService.save(user1);
+//        Permission permission = Permission.builder().permissionName("BUY_PRODUCT").build();
+//        permissionService.save(permission);
+//
+//        Role role = Role.builder().roleName("Customer").permissions(Set.of(permission)).build();
+//        roleService.save(role);
+//
+//        User user = User.builder().username("alex").password("al123").roleSet(Set.of(role)).accountNonExpired(true).email("www.aaa.com").build();
+////        userService(user);
+//
+//        Permission permission1 = Permission.builder().permissionName("BUY_PRODUCT_BY").build();
+//        permissionService.save(permission1);
+//
+//        Role role1 = Role.builder().roleName("Customer").permissions(Set.of(permission1)).build();
+//        roleService.save(role1);
+//
+//        User user1 = User.builder().username("sun").password("ss123").roleSet(Set.of(role1)).accountNonExpired(true).email("www.aaa.com").build();
+////        userService.save(user1);
 //        -------------------------------------------------------------------------------------------------------------------------------------------
         // Product_Test
 
-        ProductPropertyValue productPropertyValue = ProductPropertyValue.builder().name("64G").build();
-//        productPropertyValueService.save(productPropertyValue);
+//        ProductPropertyValue productPropertyValue = ProductPropertyValue.builder().name("64G").build();
+////        productPropertyValueService.save(productPropertyValue);
+//
+//        GroupProperty groupProperty = GroupProperty.builder().name("ram").productPropertyValue(productPropertyValue).build();
+////        groupPropertyService.save(groupProperty);
+//        ProductGroup child1 = new ProductGroup();
+//        ProductGroup parent2 = new ProductGroup();
+//        child1.setName("digital");
+//        parent2.setName("electronic");
 
-        GroupProperty groupProperty = GroupProperty.builder().name("ram").productPropertyValue(productPropertyValue).build();
-//        groupPropertyService.save(groupProperty);
-        ProductGroup child1 = new ProductGroup();
-        ProductGroup parent2 = new ProductGroup();
-        child1.setName("digital");
-        parent2.setName("electronic");
-
-        ProductGroup productGroup = ProductGroup.builder().groupProperty(groupProperty).name("laptop").parent(parent2).build();
+//        ProductGroup productGroup = ProductGroup.builder().groupProperty(groupProperty).name("laptop").parent(parent2).build();
 //        productGroupService.save(productGroup);
 
-        Product product = Product.builder()
+        ProductDto productDto = ProductDto.builder()
                 .name("laptop")
                 .price(20F)
-                .productGroup(productGroup)
-                .code(1L)
+//                .productGroupDto(productGroup)
+                .productCode(1L)
                 .build();
-        productService.save(product);
-//        System.out.println("product :"+product);
+        productService.save(productDto);
+//        productService
+        System.out.println("product DTO :"+productDto);
 //                System.out.println("Parent of productGroup :"+productGroupService.findByParent(String.valueOf(productGroup.getParent())));
 
 //        ProductPropertyValue productPropertyValue = ProductPropertyValue.builder().value("64G").build();
@@ -131,36 +133,36 @@ public class FirstData implements CommandLineRunner {
 //        productService.save(product);
 ////        System.out.println("Product :" + product.toString());
 
-        Cash cash = Cash.builder().amount(2).dateTime(LocalDateTime.now()).user(user1).build();
-        Card card = Card.builder().amount(3).user(user).build();
-        Check check = Check.builder().checkNumber("232").amount(4).dateTime(LocalDateTime.now()).build();
-
-        BigDecimal minAmount = new BigDecimal("100.00");
-        Order order = Order.builder()
-                .payments(List.of(cash, card))
-                .orderNumber("123")
-                .amount(2)
-                .orderDate(LocalDate.of(2025, 1, 1))
-                .build();
-        orderServiceImpl.save(order);
+//        Cash cash = Cash.builder().amount(2).dateTime(LocalDateTime.now()).user(user1).build();
+//        Card card = Card.builder().amount(3).user(user).build();
+//        Check check = Check.builder().checkNumber("232").amount(4).dateTime(LocalDateTime.now()).build();
+//
+//        BigDecimal minAmount = new BigDecimal("100.00");
+//        Order order = Order.builder()
+//                .payments(List.of(cash, card))
+//                .orderNumber("123")
+//                .amount(2)
+//                .orderDate(LocalDate.of(2025, 1, 1))
+//                .build();
+//        orderServiceImpl.save(order);
 //        System.out.println("Order saved :" + order);
 
-        OrderItem orderItem = OrderItem.builder()
-                .amount(23)
-                .price(45)
-                .product(product)
-                .quantity(2)
-                .build();
-
-        Order order1 = Order.builder()
-                .payments(List.of(check))
-                .orderNumber("323")
-                .amount(5)
-                .orderDate(LocalDate.of(2025, 2, 2))
-                .orderItems(List.of(orderItem))
-                .user(user1)
-                .build();
-        orderServiceImpl.save(order1);
+//        OrderItem orderItem = OrderItem.builder()
+//                .amount(23)
+//                .price(45)
+////                .product(product)
+//                .quantity(2)
+//                .build();
+//
+//        Order order1 = Order.builder()
+//                .payments(List.of(check))
+//                .orderNumber("323")
+//                .amount(5)
+//                .orderDate(LocalDate.of(2025, 2, 2))
+//                .orderItems(List.of(orderItem))
+//                .user(user1)
+//                .build();
+//        orderServiceImpl.save(order1);
 //        System.out.println("Order saved :" + order1);
 //        System.out.println(orderServiceImpl.findByPaymentId(2L));
 //
@@ -171,62 +173,105 @@ public class FirstData implements CommandLineRunner {
 //        System.out.println("amount rang in date range :" + orderServiceImpl.findOrdersByAmountAndDateRange(1, 6, LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 2)));
 
 
-        InventoryProduct inventoryProduct = InventoryProduct.builder()
-                .products(product)
-                .phone("091232234334")
-                .title("tredmil")
-                .quantity(23.0)
-                .address("Tehran_west")
-                .build();
-        inventoryProductService.save(inventoryProduct);
+//        InventoryProduct inventoryProduct = InventoryProduct.builder()
+////                .products(product)
+//                .phone("091232234334")
+//                .title("tredmil")
+//                .quantity(23.0)
+//                .address("Tehran_west")
+//                .build();
+//        inventoryProductService.save(inventoryProduct);
 
-        InventoryTransaction inventoryTransaction = InventoryTransaction.builder()
-                .inventoryProducts(List.of(inventoryProduct))
-                .count(1.0)
-                .status(InventoryStatus.outcome)
-                .orderItem(orderItem)
-                .build();
-        inventoryTransactionService.save(inventoryTransaction);
+//        InventoryTransaction inventoryTransaction = InventoryTransaction.builder()
+//                .inventoryProducts(List.of(inventoryProduct))
+//                .count(1.0)
+//                .status(InventoryStatus.outcome)
+//                .orderItem(orderItem)
+//                .build();
+//        inventoryTransactionService.save(inventoryTransaction);
 //        System.out.println("inventoryTransaction" + inventoryTransaction);
 
 
 
-        ProductGroupDto child2 = new ProductGroupDto();
-        ProductGroupDto parent3 = new ProductGroupDto();
-        child2.setName("digital");
-        parent3.setName("electronic");
-        ProductGroupDto productGroupDto = ProductGroupDto.builder()
-                .name("mobile")
-                .parent(parent3)
-                .childList(List.of(child2))
-                .build();
-        productGroupServiceDto.save(productGroupDto);
-        System.out.println("productGroupDto :"+productGroupDto);
+//        ProductGroupDto child2 = new ProductGroupDto();
+//        ProductGroupDto parent3 = new ProductGroupDto();
+//        child2.setName("digital");
+//        parent3.setName("electronic");
+//        ProductGroupDto productGroupDto = ProductGroupDto.builder()
+//                .name("mobile")
+//                .parent(parent3)
+//                .childList(List.of(child2))
+//                .build();
+//        productGroupServiceDto.save(productGroupDto);
+//        System.out.println("productGroupDto :"+productGroupDto);
+//
+//        ProductDto productDto = ProductDto.builder().name("laptop").productGroupDto(productGroupDto).price(23F).productCode(12L).build();
+//        productDtoService.save(productDto);
+////        System.out.println("ProductDto :"+productDto);
+//
+//
+//
+//        ProductPropertyValueDto productPropertyValueDto=ProductPropertyValueDto.builder()
+//                .name("ram")
+//                .value("64gig")
+//                .build();
+////        productPropertyValueServiceDto.saveProductPropertyValueDto(productPropertyValueDto);
+////        System.out.println("productPropertyValueDto :"+productPropertyValueDto);
+//
+//        GroupPropertyDto groupPropertyDto=GroupPropertyDto.builder()
+//                .name("laptop")
+//                .productPropertyValueDto(productPropertyValueDto)
+//                .build();
+//        groupPropertyServiceDto.save(groupPropertyDto);
+//        System.out.println("GroupProperty :"+groupPropertyDto);
+//
+//        ProductDto productDto1 = ProductDto.builder().name("mobile").productGroupDto(productGroupDto).price(23F).productCode(12L).build();
+//        productDtoService.save(productDto1);
+//        System.out.println("ProductDto 1 :"+productDto1);
+//        System.out.println("ProductDto  foundAll :"+productDtoService.findAll());
 
-        ProductDto productDto = ProductDto.builder().name("laptop").productGroupDto(productGroupDto).price(23F).productCode(12L).build();
-        productDtoService.save(productDto);
-//        System.out.println("ProductDto :"+productDto);
 
 
+// ایجاد GroupPropertyDto
+//        ProductPropertyValueDto productPropertyValueDto = ProductPropertyValueDto.builder()
+//                .name("ram")
+//                .value("64gig")
+//                .build();
 
-        ProductPropertyValueDto productPropertyValueDto=ProductPropertyValueDto.builder()
-                .name("ram")
-                .value("64gig")
-                .build();
-//        productPropertyValueServiceDto.saveProductPropertyValueDto(productPropertyValueDto);
-//        System.out.println("productPropertyValueDto :"+productPropertyValueDto);
+//        GroupPropertyDto groupPropertyDto = GroupPropertyDto.builder()
+//                .name("laptop")
+//                .productPropertyValueDto(productPropertyValueDto)
+//                .build();
+//        groupPropertyServiceDto.save(groupPropertyDto);
 
-        GroupPropertyDto groupPropertyDto=GroupPropertyDto.builder()
-                .name("laptop")
-                .productPropertyValueDto(productPropertyValueDto)
-                .build();
-        groupPropertyServiceDto.save(groupPropertyDto);
-        System.out.println("GroupProperty :"+groupPropertyDto);
+        // ابتدا ساخت GroupPropertyDto و اتصال آن به ProductGroupDto
+//        ProductGroupDto productGroupDto = ProductGroupDto.builder()
+//                .name("electronics")
+//                .childList(new ArrayList<>())
+//                .groupProperty(groupPropertyDto)
+//                .parent(null)
+//                .build();
 
-        ProductDto productDto1 = ProductDto.builder().name("mobile").productGroupDto(productGroupDto).price(23F).productCode(12L).build();
-        productDtoService.save(productDto1);
-        System.out.println("ProductDto 1 :"+productDto1);
-        System.out.println("ProductDto  foundAll :"+productDtoService.findAll());
+// افزودن GroupPropertyDto به ProductGroupDto
+//        productGroupDto.setGroupProperty(groupPropertyDto);
+
+// ذخیره ProductGroupDto
+//        productGroupServiceDto.save(productGroupDto);
+
+// ایجاد و ذخیره ProductDto با استفاده از ProductGroupDto
+//        ProductDto productDto1 = ProductDto.builder()
+//                .name("mobile")
+//                .productGroupDto(productGroupDto)
+//                .price(23F)
+//                .productCode(12L)
+//                .build();
+//
+//        productDtoService.save(productDto1);
+
+// نمایش نتیجه
+//        System.out.println("ProductDto 1 :" + productDto1);
+//        System.out.println("ProductDto foundAll :" + productDtoService.findAll());
+
 
     }
 }
