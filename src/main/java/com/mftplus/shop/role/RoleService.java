@@ -1,8 +1,12 @@
 package com.mftplus.shop.role;
 
+import com.mftplus.shop.mapper.BaseMapper;
+import com.mftplus.shop.role.dto.RoleDto;
+import com.mftplus.shop.service.BaseServiceImpl;
 import com.mftplus.shop.user.service.UserService_old;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,41 +14,9 @@ import java.util.List;
 
 
 @Service
-public class RoleService {
-    private static final Logger logger = LoggerFactory.getLogger(UserService_old.class);
+public class RoleService extends BaseServiceImpl<Role, RoleDto, Long> {
 
-
-    private final RoleRepository roleRepository;
-
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public RoleService(JpaRepository<Role, Long> repository, BaseMapper<Role, RoleDto> mapper) {
+        super(repository, mapper);
     }
-
-    @Transactional
-    public Role save(Role role) {
-        return roleRepository.save(role);
-    }
-    @Transactional
-    public Role update(Role role) {
-        return roleRepository.save(role);
-    }
-
-    @Transactional
-    public Role findById(Long roleId) {
-        return roleRepository.findById(roleId).orElse(null);
-
-    }
-
-    @Transactional
-    public List<Role> findAll() {
-        logger.debug("Fetching all roles from database");
-        List<Role> roles = roleRepository.findAll();
-        logger.debug("Retrieved {} roles", roles.size());
-        return roles;    }
-
-    @Transactional
-    public void delete(Long roleId) {
-        roleRepository.deleteById(roleId);
-    }
-
 }
