@@ -15,7 +15,7 @@ import com.mftplus.shop.product.dto.*;
 import com.mftplus.shop.role.Role;
 import com.mftplus.shop.role.RoleService;
 import com.mftplus.shop.user.User;
-import com.mftplus.shop.user.UserService;
+import com.mftplus.shop.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
