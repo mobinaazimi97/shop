@@ -1,5 +1,6 @@
-package com.mftplus.shop.permission;
+package com.mftplus.shop.permission.repository;
 
+import com.mftplus.shop.permission.entity.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

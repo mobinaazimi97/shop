@@ -1,6 +1,6 @@
-package com.mftplus.shop.role;
+package com.mftplus.shop.role.entity;
 
-import com.mftplus.shop.permission.Permission;
+import com.mftplus.shop.permission.entity.Permission;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

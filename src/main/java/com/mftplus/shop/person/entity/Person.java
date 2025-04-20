@@ -1,8 +1,8 @@
-package com.mftplus.shop.person;
+package com.mftplus.shop.person.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mftplus.shop.enums.Gender;
-import com.mftplus.shop.user.User;
+import com.mftplus.shop.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

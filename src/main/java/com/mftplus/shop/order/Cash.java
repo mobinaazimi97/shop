@@ -1,6 +1,6 @@
 package com.mftplus.shop.order;
 
-import com.mftplus.shop.user.User;
+import com.mftplus.shop.user.entity.User;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

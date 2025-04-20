@@ -3,15 +3,15 @@ package com.mftplus.shop.user.service;
 import com.mftplus.shop.config.CacheEvictLevel;
 import com.mftplus.shop.config.CacheableLevel;
 import com.mftplus.shop.service.BaseServiceImpl;
-import com.mftplus.shop.user.User;
-import com.mftplus.shop.user.UserRepository;
+import com.mftplus.shop.user.entity.User;
+import com.mftplus.shop.user.repository.UserRepository;
 import com.mftplus.shop.user.dto.UserDto;
 import com.mftplus.shop.user.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-@CacheableLevel(cacheName = "user_cache")
-@CacheEvictLevel(cacheNames = "user_cache")
+//@CacheableLevel(cacheName = "user_cache")
+//@CacheEvictLevel(cacheNames = "user_cache")
 public class UserService extends BaseServiceImpl<User, UserDto, Long>{
     private final UserRepository userRepository;
     private final UserMapper userMapper;

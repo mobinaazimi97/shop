@@ -1,8 +1,7 @@
-package com.mftplus.shop.user;
+package com.mftplus.shop.user.controller;
 
 import com.mftplus.shop.user.dto.UserDto;
 import com.mftplus.shop.user.service.UserService;
-import com.mftplus.shop.user.service.UserService_old;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.mftplus.shop.permission;
+package com.mftplus.shop.permission.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
