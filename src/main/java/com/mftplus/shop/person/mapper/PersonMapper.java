@@ -10,11 +10,11 @@ import org.mapstruct.Mapping;
 
 @Mapper(config = CentralMapperConfig.class, uses = DataMapper.class)
 public interface PersonMapper extends BaseMapper<Person, PersonDto> {
-    @Override
-    @Mapping(source = "person.gender", target = "gender", qualifiedByName = "genderToString")
-    PersonDto toDto(Person person);
-
-    @Override
-    @Mapping(source = "gender", target = "gender", qualifiedByName = "stringToGender")
-    Person toEntity(PersonDto personDto);
+//    @Override
+//    @Mapping(source = "person.gender", target = "gender", qualifiedByName = "genderToString")
+//    PersonDto toDto(Person person);
+//
+//    @Override
+//    @Mapping(source = "gender", target = "gender", qualifiedByName = "stringToGender")
+//    Person toEntity(PersonDto personDto);
 }

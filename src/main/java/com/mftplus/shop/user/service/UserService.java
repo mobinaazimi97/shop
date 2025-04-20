@@ -6,6 +6,7 @@ import com.mftplus.shop.user.User;
 import com.mftplus.shop.user.UserRepository;
 import com.mftplus.shop.user.dto.UserDto;
 import com.mftplus.shop.user.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,8 @@ public class UserService extends BaseServiceImpl<User, UserDto, Long>{
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserService(JpaRepository<User, Long> repository, BaseMapper<User, UserDto> mapper, UserRepository userRepository, UserMapper userMapper) {
-        super(repository, mapper);
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
+        super(userRepository, userMapper);
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
