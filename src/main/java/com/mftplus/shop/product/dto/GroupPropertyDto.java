@@ -1,6 +1,6 @@
 package com.mftplus.shop.product.dto;
 
-import com.mftplus.shop.product.GroupProperty;
+import com.mftplus.shop.product.entity.GroupProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

@@ -1,6 +1,5 @@
-package com.mftplus.shop.product;
+package com.mftplus.shop.product.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLRestriction;
-
-import java.util.List;
 
 
 @NoArgsConstructor

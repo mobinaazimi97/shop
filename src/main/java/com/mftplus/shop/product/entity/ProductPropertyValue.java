@@ -1,4 +1,4 @@
-package com.mftplus.shop.product;
+package com.mftplus.shop.product.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,8 +20,9 @@ import org.hibernate.annotations.SQLRestriction;
 @Cacheable
 public class ProductPropertyValue {
     @Id
-    @SequenceGenerator(name = "productPropertiesGroupSeq", sequenceName = "product_properties_group_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_properties_group_seq")
+//    @SequenceGenerator(name = "productPropertiesGroupSeq", sequenceName = "product_properties_group_seq", allocationSize = 1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_properties_group_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")

@@ -1,4 +1,4 @@
-package com.mftplus.shop.product;
+package com.mftplus.shop.product.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -16,7 +16,9 @@ import org.hibernate.annotations.SQLRestriction;
 @ToString
 
 @Entity(name = "productEntity")
-@Table(name = "product_tbl")
+@Table(name = "product_tbl" , indexes = {
+        @Index(name = "idx_product_productGroup_productGroup_name",columnList = "name")
+})
 @Cacheable
 public class Product {
     @Id
@@ -36,7 +38,7 @@ public class Product {
     @Column(name = "product_code")
     private Long code;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "p_group")
     private ProductGroup productGroup;
 

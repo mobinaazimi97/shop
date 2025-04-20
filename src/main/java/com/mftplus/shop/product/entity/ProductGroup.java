@@ -1,7 +1,6 @@
-package com.mftplus.shop.product;
+package com.mftplus.shop.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,9 +29,9 @@ public class ProductGroup {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productGroupSeq")
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 30)
+    @Column(name = "pGroupName", nullable = false, length = 30)
 //    @Pattern(regexp = "^[a-zA-Z]{3,30}$", message = "invalid name!")
-    private String name;
+    private String pGroupName;
 
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
