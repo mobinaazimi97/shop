@@ -1,7 +1,7 @@
 package com.mftplus.shop.inventory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mftplus.shop.product.Product;
+import com.mftplus.shop.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

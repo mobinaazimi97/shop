@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductGroupRepository extends JpaRepository<ProductGroup, Long> {
-//    @Query("select p from productGroupEntity p where p.parent.name=:name")
-//    ProductGroup findByParent(@Param("parent") String name);
 
     @Modifying
     @Query("update productGroupEntity p set p.isDeleted=true where p.id= :id")

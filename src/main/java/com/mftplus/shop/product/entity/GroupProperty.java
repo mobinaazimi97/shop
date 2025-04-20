@@ -25,12 +25,6 @@ public class GroupProperty {
     @Column(name = "group_name")
     private String name;
 
-//    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-//    private Product product;
-
-//    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-//    private ProductGroup productGroup; // Todo
-
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "value_info")
     private ProductPropertyValue productPropertyValue;

@@ -9,10 +9,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(config = CentralMapperConfig.class)
 public interface ProductPropertyValueMapper extends BaseMapper<ProductPropertyValue, ProductPropertyValueDto> {
-//    ProductPropertyValueDto toDto(ProductPropertyValue entity);
-//
-//    ProductPropertyValue toEntity(ProductPropertyValueDto dto);
-//
-//    List<ProductPropertyValueDto> toDtoList(List<ProductPropertyValue> list);
 
 }

@@ -11,16 +11,4 @@ import org.mapstruct.Mapper;
 @Mapper(config = CentralMapperConfig.class)
 public interface ProductMapper extends BaseMapper<Product, ProductDto> {
 
-//ProductDto toDto(Product entity);
-//
-//    Product toEntity(ProductDto dto);
-//
-////    Product getById(Long id);
-//
-//    List<ProductDto> toDtoList(List<Product> list);
-//
-//    List<Product> toEntityList(List<ProductDto> list);
-//
-//    void updateProductFromProductDto(ProductDto productDto, @MappingTarget Product product);
-
 }

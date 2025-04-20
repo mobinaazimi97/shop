@@ -1,15 +1,13 @@
 package com.mftplus.shop.orderItem;
 
 
-import com.mftplus.shop.product.Product;
+import com.mftplus.shop.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 
 @NoArgsConstructor
