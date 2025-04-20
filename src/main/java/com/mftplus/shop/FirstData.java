@@ -62,19 +62,19 @@ public class FirstData implements CommandLineRunner {
 
 
         Permission permission = Permission.builder().permissionName("BUY_PRODUCT").build();
-        permissionService.save(permission);
+//        permissionService.save(permission);
 
         Role role = Role.builder().roleName("Customer").permissions(Set.of(permission)).build();
-        roleService.save(role);
+//        roleService.save(role);
 
         User user = User.builder().username("alex").password("al123").roleSet(Set.of(role)).accountNonExpired(true).email("www.aaa.com").build();
 //        userService(user);
 
         Permission permission1 = Permission.builder().permissionName("BUY_PRODUCT_BY").build();
-        permissionService.save(permission1);
+//        permissionService.save(permission1);
 
         Role role1 = Role.builder().roleName("Customer").permissions(Set.of(permission1)).build();
-        roleService.save(role1);
+//        roleService.save(role1);
 
         User user1 = User.builder().username("sun").password("ss123").roleSet(Set.of(role1)).accountNonExpired(true).email("www.aaa.com").build();
         User user2 = User.builder().username("mahdiar").password("mm123").roleSet(Set.of(role1)).accountNonExpired(true).email("www.mahdiar.com").build();

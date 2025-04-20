@@ -1,35 +1,17 @@
 package com.mftplus.shop.person;
 
+import com.mftplus.shop.mapper.BaseMapper;
+import com.mftplus.shop.person.dto.PersonDto;
+import com.mftplus.shop.service.BaseService;
+import com.mftplus.shop.service.BaseServiceImpl;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PersonService {
-    private final PersonRepository personRepository;
-
-    public PersonService(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
-
-    public Person save(Person person) {
-        return personRepository.save(person);
-    }
-
-    public Person update(Person person) {
-        return personRepository.save(person);
-    }
-
-    public List<Person> findAll() {
-        return personRepository.findAll();
-    }
-
-    public Person findById(Long id) {
-        return personRepository.findById(id).orElse(null);
-
-    }
-
-    public void deleteById(Long id) {
-        personRepository.deleteById(id);
+public class PersonService extends BaseServiceImpl<Person, PersonDto, Long> {
+    public PersonService(JpaRepository<Person, Long> repository, BaseMapper<Person, PersonDto> mapper) {
+        super(repository, mapper);
     }
 }
