@@ -21,6 +21,7 @@ import java.util.Set;
 
 @Entity(name = "userEntity")
 @Table(name = "user_tbl")
+@Cacheable
 public class User {
 
     @Id
