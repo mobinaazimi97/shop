@@ -3,6 +3,8 @@ package com.mftplus.shop.service;
 import com.mftplus.shop.mapper.BaseMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,7 @@ public class BaseServiceImpl<E, D, ID> implements BaseService<D, ID> {
         this.mapper = mapper;
     }
 
+    @Transactional
     @Override
     public D findById(ID id) {
         E entity = repository.findById(id)
@@ -26,6 +29,7 @@ public class BaseServiceImpl<E, D, ID> implements BaseService<D, ID> {
         return mapper.toDto(entity);
     }
 
+    @Transactional
     @Override
     public List<D> findAll() {
         log.info(repository.findAll().toString());
@@ -35,6 +39,7 @@ public class BaseServiceImpl<E, D, ID> implements BaseService<D, ID> {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public D save(D d) {
         E entity = mapper.toEntity(d);
@@ -42,6 +47,7 @@ public class BaseServiceImpl<E, D, ID> implements BaseService<D, ID> {
         return mapper.toDto(repository.save(entity));
     }
 
+    @Transactional
     @Override
     public List<D> saveAll(List<D> list) {
         List<E> entites = list
@@ -55,6 +61,7 @@ public class BaseServiceImpl<E, D, ID> implements BaseService<D, ID> {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public D update(ID id, D d) {
         E entity = repository.findById(id)
@@ -64,6 +71,7 @@ public class BaseServiceImpl<E, D, ID> implements BaseService<D, ID> {
         return mapper.toDto(repository.save(entity));
     }
 
+    @Transactional
     @Override
     public void delete(ID id) {
         if (!repository.existsById(id)) {
