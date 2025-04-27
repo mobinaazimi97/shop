@@ -1,11 +1,14 @@
 package com.mftplus.shop.role.dto;
 
 
+import com.mftplus.shop.permission.entity.Permission;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -14,4 +17,5 @@ import lombok.experimental.SuperBuilder;
 @ToString
 public class RoleDto {
     private String roleName;
+    private Set<Permission> permissionSet;
 }

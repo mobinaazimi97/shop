@@ -1,29 +1,72 @@
 package com.mftplus.shop.role.service;
 
-import com.mftplus.shop.config.CacheEvictLevel;
-import com.mftplus.shop.config.CacheableLevel;
-import com.mftplus.shop.mapper.BaseMapper;
-import com.mftplus.shop.role.dto.RoleDto;
+
+import com.mftplus.shop.permission.entity.Permission;
+import com.mftplus.shop.permission.repository.PermissionRepository;
 import com.mftplus.shop.role.entity.Role;
-import com.mftplus.shop.role.mapper.RoleMapper;
 import com.mftplus.shop.role.repository.RoleRepository;
 import com.mftplus.shop.role.dto.RoleDto;
-import com.mftplus.shop.role.entity.Role;
-import com.mftplus.shop.service.BaseServiceImpl;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.mftplus.shop.role.mapper.RoleMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
-//@CacheableLevel(cacheName = "role_cache")
-//@CacheEvictLevel(cacheNames = "role_cache")
-public class RoleService extends BaseServiceImpl<Role, RoleDto, Long>{
+@RequiredArgsConstructor
+public class RoleService{
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
+    private final PermissionRepository permissionRepository;
 
-    public RoleService(RoleRepository roleRepository, RoleMapper roleMapper) {
-        super(roleRepository, roleMapper);
-        this.roleRepository = roleRepository;
-        this.roleMapper = roleMapper;
+    @Transactional
+    public RoleDto save(RoleDto roleDto) {
+        Role role = roleMapper.toEntity(roleDto);
+        Set<Permission> permissions = role.getPermissionSet().stream()
+                .map(permission -> permissionRepository.findByPermissionName(permission.getPermissionName())
+                        .orElseThrow(() -> new IllegalArgumentException("Permission not found : " + permission.getPermissionName())))
+                .collect(Collectors.toSet());
+        role.setPermissionSet(permissions);
+        Role savedRole = roleRepository.save(role);
+        return roleMapper.toDto(savedRole);
+    }
+
+    @Transactional
+    public List<RoleDto> saveAll(List<RoleDto> roleDtos) {
+        roleDtos.forEach(roleDto -> {
+            RoleDto savedRole = save(roleDto);
+        });
+        return roleDtos;
+    }
+
+    public List<RoleDto> findAll() {
+        return roleRepository.findAll()
+                .stream()
+                .map(roleMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public RoleDto findById(Long id) {
+        Role role = roleRepository.findById(id).get();
+        return roleMapper.toDto(role);
+    }
+
+    @Transactional
+    public RoleDto update(Long id,RoleDto roleDto) {
+        Role role = roleRepository.findById(id).get();
+        roleMapper.updateFromDto(roleDto, role);
+        return roleMapper.toDto(roleRepository.save(role));
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        if (!roleRepository.existsById(id)) {
+            throw new IllegalArgumentException("Role not found");
+        }
+        roleRepository.deleteById(id);
     }
 }
