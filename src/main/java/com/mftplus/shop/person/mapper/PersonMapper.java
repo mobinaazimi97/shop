@@ -6,6 +6,7 @@ import com.mftplus.shop.mapper.DataMapper;
 import com.mftplus.shop.person.entity.Person;
 import com.mftplus.shop.person.dto.PersonDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(config = CentralMapperConfig.class, uses = DataMapper.class)
 public interface PersonMapper extends BaseMapper<Person, PersonDto> {
@@ -16,4 +17,5 @@ public interface PersonMapper extends BaseMapper<Person, PersonDto> {
 //    @Override
 //    @Mapping(source = "gender", target = "gender", qualifiedByName = "stringToGender")
 //    Person toEntity(PersonDto personDto);
+
 }
