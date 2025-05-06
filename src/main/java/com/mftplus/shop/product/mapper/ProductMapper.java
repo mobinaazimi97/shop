@@ -1,5 +1,6 @@
 package com.mftplus.shop.product.mapper;
 
+import com.mftplus.shop.config.CentralMapperConfig;
 import com.mftplus.shop.product.Product;
 import com.mftplus.shop.product.dto.ProductDto;
 import org.mapstruct.InheritInverseConfiguration;
@@ -7,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
-@Mapper(componentModel = "spring")
+@Mapper(config = CentralMapperConfig.class)
 public interface ProductMapper {
 
     @Mapping(source = "uuid", target = "id")

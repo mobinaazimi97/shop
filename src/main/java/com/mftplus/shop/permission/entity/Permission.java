@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long permissionId;
+    private Long id;
 
     @Column(name = "permission_Name")
     private String permissionName;

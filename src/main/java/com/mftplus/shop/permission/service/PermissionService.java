@@ -6,17 +6,10 @@ import com.mftplus.shop.permission.dto.PermissionDto;
 import com.mftplus.shop.permission.entity.Permission;
 import com.mftplus.shop.permission.mapper.PermissionMapper;
 import com.mftplus.shop.permission.repository.PermissionRepository;
-import com.mftplus.shop.permission.dto.PermissionDto;
-import com.mftplus.shop.permission.entity.Permission;
-import com.mftplus.shop.permission.mapper.PermissionMapper;
-import com.mftplus.shop.permission.repository.PermissionRepository;
-import com.mftplus.shop.service.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

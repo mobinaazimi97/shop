@@ -1,10 +1,12 @@
 package com.mftplus.shop.user.dto;
 
+import com.mftplus.shop.role.dto.RoleDto;
 import com.mftplus.shop.role.entity.Role;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
+import java.util.UUID;
 
 
 @Getter
@@ -14,8 +16,9 @@ import java.util.Set;
 @SuperBuilder
 @ToString
 public class UserDto {
+    private UUID id;
     private String username;
     private String password;
     private String email;
-    private Set<Role> roleSet;
+    private Set<RoleDto> roleSet;
 }

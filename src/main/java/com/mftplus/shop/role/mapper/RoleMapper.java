@@ -1,15 +1,25 @@
 package com.mftplus.shop.role.mapper;
 
 import com.mftplus.shop.config.CentralMapperConfig;
-import com.mftplus.shop.mapper.BaseMapper;
+import com.mftplus.shop.permission.mapper.PermissionMapper;
 import com.mftplus.shop.role.entity.Role;
 import com.mftplus.shop.role.dto.RoleDto;
+import com.mftplus.shop.user.dto.UserDto;
+import com.mftplus.shop.user.entity.User;
+import com.mftplus.shop.uuid.UuidMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
-@Mapper(config = CentralMapperConfig.class)
-public interface RoleMapper extends BaseMapper<Role, RoleDto> {
-    @Override
-    @Mapping(target = "permissionSet", source = "role.permissionSet")
-    RoleDto toDto(Role role);
+import java.util.Set;
+
+@Mapper(config = CentralMapperConfig.class, uses = {UuidMapper.class, PermissionMapper.class})
+public interface RoleMapper  {
+    RoleDto toDto(Role entity);
+    Role toEntity(RoleDto dto);
+
+    Set<RoleDto> toDtoSet(Set<Role> roles);
+    Set<Role> toEntitySet(Set<RoleDto> roleDtos);
+
+    void updateFromDto(RoleDto roleDto,@MappingTarget Role role);
 }

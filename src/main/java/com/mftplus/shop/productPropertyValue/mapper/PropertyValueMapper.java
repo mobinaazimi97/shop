@@ -1,12 +1,13 @@
 package com.mftplus.shop.productPropertyValue.mapper;
 
+import com.mftplus.shop.config.CentralMapperConfig;
 import com.mftplus.shop.productPropertyValue.PropertyValue;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
-@Mapper(componentModel = "spring")
+@Mapper(config = CentralMapperConfig.class)
 public interface PropertyValueMapper {
 
     @Mapping(source = "uuid", target = "id")

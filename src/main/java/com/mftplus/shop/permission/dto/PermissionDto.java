@@ -3,6 +3,8 @@ package com.mftplus.shop.permission.dto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -10,5 +12,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class PermissionDto {
+    private UUID id;
     private String permissionName;
 }

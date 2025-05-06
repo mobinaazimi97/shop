@@ -1,5 +1,6 @@
 package com.mftplus.shop;
 
+import com.mftplus.shop.permission.dto.PermissionDto;
 import com.mftplus.shop.permission.entity.Permission;
 import com.mftplus.shop.permission.mapper.PermissionMapper;
 import com.mftplus.shop.permission.service.PermissionService;
@@ -37,13 +38,13 @@ public class UserFirstTest implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Permission permission1 = Permission.builder().permissionName("BUY_PRODUCT").build();
-        permissionService.save(permissionMapper.toDto(permission1));
+        PermissionDto permissionDto1 = permissionService.save(permissionMapper.toDto(permission1));
 
         Permission permission2 = Permission.builder().permissionName("SELL_PRODUCT").build();
-        permissionService.save(permissionMapper.toDto(permission2));
+        PermissionDto permissionDto2 = permissionService.save(permissionMapper.toDto(permission2));
 
         Permission permission3 = Permission.builder().permissionName("EDIT_PRODUCT").build();
-        permissionService.save(permissionMapper.toDto(permission3));
+        PermissionDto permissionDto3 = permissionService.save(permissionMapper.toDto(permission3));
 
         System.out.println("permissions : " + permissionService.findAll());
         System.out.println("------------------------------------------------");

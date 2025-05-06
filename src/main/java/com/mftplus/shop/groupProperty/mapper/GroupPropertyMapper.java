@@ -1,6 +1,7 @@
 package com.mftplus.shop.groupProperty.mapper;
 
 
+import com.mftplus.shop.config.CentralMapperConfig;
 import com.mftplus.shop.groupProperty.GroupProperty;
 import com.mftplus.shop.groupProperty.dto.GroupPropertyDto;
 import org.mapstruct.InheritInverseConfiguration;
@@ -8,7 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
-@Mapper(componentModel = "spring")
+@Mapper(config = CentralMapperConfig.class)
 public interface GroupPropertyMapper {
 
     @Mapping(source = "uuid", target = "id")

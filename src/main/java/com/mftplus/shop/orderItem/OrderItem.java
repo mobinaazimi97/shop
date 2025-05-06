@@ -1,7 +1,7 @@
 package com.mftplus.shop.orderItem;
 
 
-import com.mftplus.shop.product.entity.Product;
+import com.mftplus.shop.product.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
