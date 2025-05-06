@@ -26,6 +26,7 @@ public class RoleService{
     @Transactional
     public RoleDto save(RoleDto roleDto) {
         Role role = roleMapper.toEntity(roleDto);
+//        role.setRoleName("ROLE_" + role.getRoleName().toUpperCase());
         Set<Permission> permissions = role.getPermissionSet().stream()
                 .map(permission -> permissionRepository.findByPermissionName(permission.getPermissionName())
                         .orElseThrow(() -> new IllegalArgumentException("Permission not found : " + permission.getPermissionName())))

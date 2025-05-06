@@ -141,13 +141,13 @@ public class SecurityConfig {
     }
 
     // Bean for DaoAuthenticationProvider for authentication
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setUserDetailsService(userDetailsService); // Set custom user details service
-//        provider.setPasswordEncoder(passwordEncoder()); // Set password encoder
-//        return provider;
-//    }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService); // Set custom user details service
+        provider.setPasswordEncoder(passwordEncoder()); // Set password encoder
+        return provider;
+    }
 
     // Bean for AuthenticationManager to manage authentication
     @Bean

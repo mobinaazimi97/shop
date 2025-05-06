@@ -1,0 +1,132 @@
+spring:
+  application:
+    name: shop
+  profiles:
+    active: dev
+
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://postgres:5432/spring_db
+    username: java
+    password: java123
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      initialization-fail-timeout: 0
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 50
+  data:
+    mongodb:
+      host: mongo
+      port: 27017
+      database: spring_db_photos
+    redis:
+      host: redis
+      port: 6379
+  cache:
+    type: redis
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev2
+  datasource:
+    url: jdbc:h2:mem:spring_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        use_sql_comments: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: spring_db_photos
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: redis
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: java
+    password: java123
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  cache:
+    type: simple
+
+
+server:
+  port: 8443
+  ssl:
+    key-store: classpath:/ssl/keystore.jks
+    key-store-password: java123
+    key-alias: myalias
+    key-store-type: JKS
+  servlet:
+    session:
+      timeout: 15m
+      cookie:
+        http-only: true
+        secure: true
+        same-site: strict
+
