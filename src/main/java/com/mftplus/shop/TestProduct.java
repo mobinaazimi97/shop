@@ -36,12 +36,27 @@ public class TestProduct implements CommandLineRunner {
         electronicsDto.setTitle("Electronics");
         ProductGroupDto savedElectronics = productGroupService.save(electronicsDto);
 
-// ProductGroup child
         ProductGroupDto mobilePhonesDto = new ProductGroupDto();
         mobilePhonesDto.setTitle("Mobile Phones");
         mobilePhonesDto.setParentId(savedElectronics.getId());
         ProductGroupDto savedMobilePhones = productGroupService.save(mobilePhonesDto);
-//        PropertyValueDto productPropertyValueDto = PropertyValueDto.builder().value("ram").value("64g").build();
+
+        GroupPropertyDto groupPropertyDto = GroupPropertyDto.builder()
+                .groupName("size") // فیلد 'name' به groupName در entity map میشه
+                .productGroupId(savedMobilePhones.getId())
+                .build();
+
+        GroupPropertyDto savedGroupProperty = groupPropertyService.save(groupPropertyDto);
+
+        System.out.println("groupPropertyDto saved: " + savedGroupProperty);
+
+//        GroupPropertyDto groupPropertyDto = GroupPropertyDto.builder()
+//                .name("coffee") // this now maps to 'groupName'
+//                .productGroupId(savedMobilePhones.getId())
+//                .build();
+//                System.out.println("groupPropertyDto saved : "+groupPropertyDto);
+
+
 
     }
 

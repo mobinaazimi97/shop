@@ -8,18 +8,20 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface GroupPropertyRepository extends JpaRepository<GroupProperty, UUID> {
+public interface GroupPropertyRepository extends JpaRepository<GroupProperty, Long> {
 
     @Query("select g from groupProEntity g where g.groupName = :groupName")
     Optional<GroupProperty> findByName(@Param("groupName") String groupName);
 
+    @Query("select g from groupProEntity g where g.productGroup.id=:id")
+    Optional<GroupProperty>findByProductGroupId(@Param("id") Long id);
+
 
     @Modifying
-    @Query("update groupProEntity g set g.isDeleted=true where g.uuid= :uuid")
+    @Query("update groupProEntity g set g.isDeleted=true where g.id= :uuid")
     @Transactional
-    void logicalRemove(@Param("uuid") UUID uuid);
+    void logicalRemove(@Param("id") Long id);
 
 }

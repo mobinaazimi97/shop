@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
 
 
 @NoArgsConstructor
@@ -21,17 +20,16 @@ import java.util.UUID;
 @Cacheable
 public class GroupProperty {
     @Id
-    @GeneratedValue
-    @Column(length = 40)
-    private UUID uuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "group_name")
+    @Column(name = "property",length = 100)
     private String groupName;
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
     @ManyToOne
-    @JoinColumn(name = "group_proGroup")
+    @JoinColumn(name = "productGroup_id")
     private ProductGroup productGroup;
 }

@@ -1,25 +1,29 @@
 package com.mftplus.shop.groupProperty.mapper;
 
+import com.mftplus.shop.config.CentralMapperConfig;
 import com.mftplus.shop.groupProperty.GroupProperty;
 import com.mftplus.shop.groupProperty.dto.GroupPropertyDto;
-import org.mapstruct.InheritInverseConfiguration;
+
+import com.mftplus.shop.uuid.UuidMapper;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
+import java.util.List;
 
 
-//@Mapper(componentModel = "spring")
+@Mapper(config = CentralMapperConfig.class, uses = {UuidMapper.class})
 public interface GroupPropertyMapper {
 
-//    @Mapping(source = "uuid", target = "id")
-//    @Mapping(source = "groupName", target = "name")
-//    @Mapping(source = "productGroup.uuId", target = "productGroupId")
-//    @Mapping(source = "productGroup.title", target = "productGroupTitle")
-//        // اضافه شده
-//    GroupPropertyDto toDto(GroupProperty entity);
-//
-//    @InheritInverseConfiguration
-//    @Mapping(target = "productGroup", ignore = true) // در Service ست می‌شود
-//    @Mapping(target = "isDeleted", ignore = true)
-//    GroupProperty toEntity(GroupPropertyDto dto);
+    GroupPropertyDto toDto(GroupProperty groupProperty, @Context String entityType);
 
+    GroupProperty toEntity(GroupPropertyDto groupPropertyDto, @Context String entityType);
+
+    List<GroupPropertyDto> toDtoList(List<GroupProperty> groupPropertyList, @Context String entityType);
+
+    List<GroupProperty> toEntityList(List<GroupPropertyDto> groupPropertyDtoList, @Context String entityType);
+
+    @Mapping(target = "id", ignore = true)
+    void updateFromDto(GroupPropertyDto groupPropertyDto, @MappingTarget GroupProperty groupProperty, @Context String entityType);
 }
