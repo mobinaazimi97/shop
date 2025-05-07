@@ -26,9 +26,11 @@ import java.util.UUID;
 @Cacheable
 public class ProductGroup {
     @Id
-    @GeneratedValue
-    @Column(length = 40)
-    private UUID uuId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+//    @Column(name = "uuid", unique = true)
+//    private UUID id = UUID.randomUUID();
 
     @Column(name = "p_title")
     private String title;

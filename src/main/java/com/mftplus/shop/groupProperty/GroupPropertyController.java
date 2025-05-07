@@ -22,34 +22,34 @@ public class GroupPropertyController {
         this.groupPropertyService = groupPropertyService;
     }
 
-    @PostMapping
-    public ResponseEntity<GroupPropertyDto> saveGroupProperty(@RequestBody GroupPropertyDto groupPropertyDto) {
-        GroupPropertyDto savedGroupPropertyDto = groupPropertyService.save(groupPropertyDto);
-        return new ResponseEntity<>(savedGroupPropertyDto, HttpStatus.CREATED);
-    }
-
-    @PutMapping
-    public ResponseEntity<GroupPropertyDto> updateGroupProperty(@RequestBody GroupPropertyDto groupPropertyDto) {
-        return ResponseEntity.ok(groupPropertyService.update(groupPropertyDto.getId(), groupPropertyDto));
-    }
-
-    @DeleteMapping("/{uuid}")
-    public ResponseEntity<Void> delete(@PathVariable UUID uuid) {
-        groupPropertyService.delete(uuid);
-        return ResponseEntity.ok().build();
-    }
-
-
-    @GetMapping
-    public ResponseEntity<List<GroupPropertyDto>> getGroupProperties() {
-        List<GroupPropertyDto> groupPropertyDtos = groupPropertyService.findAll();
-        return new ResponseEntity<>(groupPropertyDtos, HttpStatus.OK);
-    }
-
-    @GetMapping("/{uuid}")
-    public ResponseEntity<GroupPropertyDto> findById(@PathVariable UUID uuid) {
-        GroupPropertyDto groupPropertyDto = groupPropertyService.findById(uuid);
-        return ResponseEntity.ok(groupPropertyDto);
-    }
+//    @PostMapping
+//    public ResponseEntity<GroupPropertyDto> saveGroupProperty(@RequestBody GroupPropertyDto groupPropertyDto) {
+//        GroupPropertyDto savedGroupPropertyDto = groupPropertyService.save(groupPropertyDto);
+//        return new ResponseEntity<>(savedGroupPropertyDto, HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping
+//    public ResponseEntity<GroupPropertyDto> updateGroupProperty(@RequestBody GroupPropertyDto groupPropertyDto) {
+//        return ResponseEntity.ok(groupPropertyService.update(groupPropertyDto.getId(), groupPropertyDto));
+//    }
+//
+//    @DeleteMapping("/{uuid}")
+//    public ResponseEntity<Void> delete(@PathVariable UUID uuid) {
+//        groupPropertyService.delete(uuid);
+//        return ResponseEntity.ok().build();
+//    }
+//
+//
+//    @GetMapping
+//    public ResponseEntity<List<GroupPropertyDto>> getGroupProperties() {
+//        List<GroupPropertyDto> groupPropertyDtos = groupPropertyService.findAll();
+//        return new ResponseEntity<>(groupPropertyDtos, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/{uuid}")
+//    public ResponseEntity<GroupPropertyDto> findById(@PathVariable UUID uuid) {
+//        GroupPropertyDto groupPropertyDto = groupPropertyService.findById(uuid);
+//        return ResponseEntity.ok(groupPropertyDto);
+//    }
 
 }

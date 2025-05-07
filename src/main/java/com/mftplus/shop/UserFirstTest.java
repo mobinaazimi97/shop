@@ -38,24 +38,24 @@ public class UserFirstTest implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Permission permission1 = Permission.builder().permissionName("BUY_PRODUCT").build();
-        PermissionDto permissionDto1 = permissionService.save(permissionMapper.toDto(permission1));
+        PermissionDto permissionDto1 = permissionService.save(permissionMapper.toDto(permission1, "Permission"));
 
         Permission permission2 = Permission.builder().permissionName("SELL_PRODUCT").build();
-        PermissionDto permissionDto2 = permissionService.save(permissionMapper.toDto(permission2));
+        PermissionDto permissionDto2 = permissionService.save(permissionMapper.toDto(permission2, "Permission"));
 
         Permission permission3 = Permission.builder().permissionName("EDIT_PRODUCT").build();
-        PermissionDto permissionDto3 = permissionService.save(permissionMapper.toDto(permission3));
+        PermissionDto permissionDto3 = permissionService.save(permissionMapper.toDto(permission3, "Permission"));
 
         System.out.println("permissions : " + permissionService.findAll());
         System.out.println("------------------------------------------------");
 
         Role role1 = Role.builder().roleName("ROLE_CUSTOMER").permissionSet(Set.of(permission1, permission2)).build();
         System.out.println(role1);
-        System.out.println(roleMapper.toDto(role1));
-        roleService.save(roleMapper.toDto(role1));
+        System.out.println(roleMapper.toDto(role1, "Role"));
+        roleService.save(roleMapper.toDto(role1, "Role"));
 
         Role role2 = Role.builder().roleName("ROLE_USER").permissionSet(Set.of(permission2, permission3)).build();
-        roleService.save(roleMapper.toDto(role2));
+        roleService.save(roleMapper.toDto(role2, "Role"));
 
         System.out.println("roles : " + roleService.findAll());
         System.out.println("------------------------------------------------");
@@ -64,10 +64,10 @@ public class UserFirstTest implements CommandLineRunner {
         User user1 = User.builder().username("sun").password("ss123").roleSet(Set.of(role1)).accountNonExpired(true).email("www.aaa.com").build();
         User user2 = User.builder().username("mahdiar").password("mm123").roleSet(Set.of(role2)).accountNonExpired(true).email("www.mahdiar.com").build();
         User user3 = User.builder().username("mobina").password("m456").roleSet(Set.of(role2)).accountNonExpired(true).email("www.mobina.com").build();
-        UserDto userDto1 = userMapper.toDto(user1);
-        UserDto userDto2 = userMapper.toDto(user2);
-        UserDto userDto3 = userMapper.toDto(user3);
-        UserDto userDto4 = userMapper.toDto(user4);
+        UserDto userDto1 = userMapper.toDto(user1, "User");
+        UserDto userDto2 = userMapper.toDto(user2, "User");
+        UserDto userDto3 = userMapper.toDto(user3, "User");
+        UserDto userDto4 = userMapper.toDto(user4, "User");
         userService.saveAll(List.of(userDto1, userDto2, userDto3, userDto4));
 
         System.out.println("users : " + userService.findAll());

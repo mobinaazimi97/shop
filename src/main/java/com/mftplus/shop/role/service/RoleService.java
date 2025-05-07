@@ -25,7 +25,7 @@ public class RoleService{
 
     @Transactional
     public RoleDto save(RoleDto roleDto) {
-        Role role = roleMapper.toEntity(roleDto);
+        Role role = roleMapper.toEntity(roleDto, "Role");
 //        role.setRoleName("ROLE_" + role.getRoleName().toUpperCase());
         Set<Permission> permissions = role.getPermissionSet().stream()
                 .map(permission -> permissionRepository.findByPermissionName(permission.getPermissionName())
@@ -33,7 +33,7 @@ public class RoleService{
                 .collect(Collectors.toSet());
         role.setPermissionSet(permissions);
         Role savedRole = roleRepository.save(role);
-        return roleMapper.toDto(savedRole);
+        return roleMapper.toDto(savedRole, "Role");
     }
 
     @Transactional
@@ -47,20 +47,20 @@ public class RoleService{
     public List<RoleDto> findAll() {
         return roleRepository.findAll()
                 .stream()
-                .map(roleMapper::toDto)
+                .map(r -> roleMapper.toDto(r, "Role"))
                 .collect(Collectors.toList());
     }
 
     public RoleDto findById(Long id) {
         Role role = roleRepository.findById(id).get();
-        return roleMapper.toDto(role);
+        return roleMapper.toDto(role, "Role");
     }
 
     @Transactional
     public RoleDto update(Long id,RoleDto roleDto) {
         Role role = roleRepository.findById(id).get();
-        roleMapper.updateFromDto(roleDto, role);
-        return roleMapper.toDto(roleRepository.save(role));
+        roleMapper.updateFromDto(roleDto, role, "Role");
+        return roleMapper.toDto(roleRepository.save(role), "Role");
     }
 
     @Transactional

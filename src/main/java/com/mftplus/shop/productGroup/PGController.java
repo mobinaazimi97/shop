@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/pGroups")
+@RequestMapping("/api/pGroups")
 public class PGController {
     private final ProductGroupService productGroupService;
 
@@ -25,26 +25,26 @@ public class PGController {
         return new ResponseEntity<>(savedProductGroupDto, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<ProductGroupDto> updateProductGroup(@RequestBody ProductGroupDto productGroupDto) throws ResourceNotFoundException {
-        return ResponseEntity.ok(productGroupService.update(productGroupDto.getId(), productGroupDto));
-    }
-
-    @DeleteMapping("/{uuId}")
-    public ResponseEntity<Void> deleteProductGroupById(@PathVariable UUID uuId) {
-        productGroupService.delete(uuId);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ProductGroupDto>> getAllProductGroups() {
-        List<ProductGroupDto> productGroups = productGroupService.findAll();
-        return new ResponseEntity<>(productGroups, HttpStatus.OK);
-    }
-
-    @GetMapping("/{uuId}")
-    public ResponseEntity<ProductGroupDto> getProductGroupById(@PathVariable UUID uuId) {
-        ProductGroupDto productGroupDto = productGroupService.findById(uuId);
-        return ResponseEntity.ok(productGroupDto);
-    }
+//    @PutMapping
+//    public ResponseEntity<ProductGroupDto> updateProductGroup(@RequestBody ProductGroupDto productGroupDto) throws ResourceNotFoundException {
+//        return ResponseEntity.ok(productGroupService.update(productGroupDto.getId(), productGroupDto));
+//    }
+//
+//    @DeleteMapping("/{uuId}")
+//    public ResponseEntity<Void> deleteProductGroupById(@PathVariable UUID uuId) {
+//        productGroupService.delete(uuId);
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity<List<ProductGroupDto>> getAllProductGroups() {
+//        List<ProductGroupDto> productGroups = productGroupService.findAll();
+//        return new ResponseEntity<>(productGroups, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/{uuId}")
+//    public ResponseEntity<ProductGroupDto> getProductGroupById(@PathVariable UUID uuId) {
+//        ProductGroupDto productGroupDto = productGroupService.findById(uuId);
+//        return ResponseEntity.ok(productGroupDto);
+//    }
 }

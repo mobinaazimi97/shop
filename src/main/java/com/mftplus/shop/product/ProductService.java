@@ -34,78 +34,78 @@ public class ProductService {
         this.propertyValueMapper = propertyValueMapper;
     }
 
-    public ProductDto save(ProductDto dto) {
-        // پیدا کردن یا ایجاد گروه محصول (ProductGroup) با شناسه خودکار
-        ProductGroup group = productGroupRepository.findById(dto.getProductGroupId())
-                .orElseGet(() -> {
-                    // اگر گروه محصول پیدا نشد، آن را به طور خودکار ایجاد می‌کنیم
-                    ProductGroup newGroup = new ProductGroup();
-                    newGroup.setTitle("Default Product Group");
-                    return productGroupRepository.save(newGroup); // ذخیره و برگشت
-                });
-
-        // ساخت موجودیت محصول (Product) از DTO
-        Product product = dto.toEntity(group);
-
-        // ذخیره محصول و سپس تبدیل آن به DTO
-        Product savedProduct = productRepository.save(product);
-
-        return productMapper.toDto(savedProduct);
-    }
-
-
-    public ProductDto update(UUID uuid, ProductDto dto) {
-        Product existing = productRepository.findById(uuid)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        ProductGroup group = productGroupRepository.findById(dto.getProductGroupId())
-                .orElseThrow(() -> new RuntimeException("ProductGroup not found from product"));
-
-        existing.setProductName(dto.getName());
-        existing.setPrice(dto.getPrice());
-        existing.setDescription(dto.getDescription());
-        existing.setProductGroup(group);
-
-        List<PropertyValue> propertyValues = buildPropertyValues(dto, existing);
-        existing.getPropertyValues().clear();
-        existing.getPropertyValues().addAll(propertyValues);
-
-        Product updated = productRepository.save(existing);
-        return productMapper.toDto(updated);
-    }
-
-    public ProductDto findById(UUID uuid) {
-        return productRepository.findById(uuid)
-                .map(productMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-    }
-
-    public List<ProductDto> findAll() {
-        return productRepository.findAll().stream()
-                .map(productMapper::toDto)
-                .toList();
-    }
-
-    private List<PropertyValue> buildPropertyValues(ProductDto dto, Product product) {
-        if (dto.getPropertyValues() == null) return List.of();
-
-        return dto.getPropertyValues().stream()
-                .map(propertyValueDto -> {
-                    PropertyValue propertyValue = propertyValueMapper.toEntity(propertyValueDto);
-                    propertyValue.setProduct(product);
-                    propertyValue.setUuid(propertyValueDto.getId() != null ? propertyValueDto.getId() : UUID.randomUUID());
-
-                    // resolve GroupProperty
-                    GroupProperty groupProperty = groupPropertyRepository.findById(propertyValueDto.getGroupPropertyId())
-                            .orElseThrow(() -> new RuntimeException("GroupProperty not found"));
-                    propertyValue.setGroupProperty(groupProperty);
-
-                    return propertyValue;
-                })
-                .toList();
-    }
-
-    public void logicalRemove(UUID uuid) {
-        productRepository.logicalRemove(uuid);
-    }
+//    public ProductDto save(ProductDto dto) {
+//        // پیدا کردن یا ایجاد گروه محصول (ProductGroup) با شناسه خودکار
+//        ProductGroup group = productGroupRepository.findById(dto.getProductGroupId())
+//                .orElseGet(() -> {
+//                    // اگر گروه محصول پیدا نشد، آن را به طور خودکار ایجاد می‌کنیم
+//                    ProductGroup newGroup = new ProductGroup();
+//                    newGroup.setTitle("Default Product Group");
+//                    return productGroupRepository.save(newGroup); // ذخیره و برگشت
+//                });
+//
+//        // ساخت موجودیت محصول (Product) از DTO
+//        Product product = dto.toEntity(group);
+//
+//        // ذخیره محصول و سپس تبدیل آن به DTO
+//        Product savedProduct = productRepository.save(product);
+//
+//        return productMapper.toDto(savedProduct);
+//    }
+//
+//
+//    public ProductDto update(UUID uuid, ProductDto dto) {
+//        Product existing = productRepository.findById(uuid)
+//                .orElseThrow(() -> new RuntimeException("Product not found"));
+//
+//        ProductGroup group = productGroupRepository.findById(dto.getProductGroupId())
+//                .orElseThrow(() -> new RuntimeException("ProductGroup not found from product"));
+//
+//        existing.setProductName(dto.getName());
+//        existing.setPrice(dto.getPrice());
+//        existing.setDescription(dto.getDescription());
+//        existing.setProductGroup(group);
+//
+//        List<PropertyValue> propertyValues = buildPropertyValues(dto, existing);
+//        existing.getPropertyValues().clear();
+//        existing.getPropertyValues().addAll(propertyValues);
+//
+//        Product updated = productRepository.save(existing);
+//        return productMapper.toDto(updated);
+//    }
+//
+//    public ProductDto findById(UUID uuid) {
+//        return productRepository.findById(uuid)
+//                .map(productMapper::toDto)
+//                .orElseThrow(() -> new RuntimeException("Product not found"));
+//    }
+//
+//    public List<ProductDto> findAll() {
+//        return productRepository.findAll().stream()
+//                .map(productMapper::toDto)
+//                .toList();
+//    }
+//
+//    private List<PropertyValue> buildPropertyValues(ProductDto dto, Product product) {
+//        if (dto.getPropertyValues() == null) return List.of();
+//
+//        return dto.getPropertyValues().stream()
+//                .map(propertyValueDto -> {
+//                    PropertyValue propertyValue = propertyValueMapper.toEntity(propertyValueDto);
+//                    propertyValue.setProduct(product);
+//                    propertyValue.setUuid(propertyValueDto.getId() != null ? propertyValueDto.getId() : UUID.randomUUID());
+//
+//                    // resolve GroupProperty
+//                    GroupProperty groupProperty = groupPropertyRepository.findById(propertyValueDto.getGroupPropertyId())
+//                            .orElseThrow(() -> new RuntimeException("GroupProperty not found"));
+//                    propertyValue.setGroupProperty(groupProperty);
+//
+//                    return propertyValue;
+//                })
+//                .toList();
+//    }
+//
+//    public void logicalRemove(UUID uuid) {
+//        productRepository.logicalRemove(uuid);
+//    }
 }

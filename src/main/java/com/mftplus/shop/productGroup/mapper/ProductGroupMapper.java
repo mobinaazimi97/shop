@@ -1,38 +1,34 @@
 package com.mftplus.shop.productGroup.mapper;
 
+import com.mftplus.shop.config.CentralMapperConfig;
 import com.mftplus.shop.productGroup.ProductGroup;
+import com.mftplus.shop.productGroup.ProductGroupRepository;
 import com.mftplus.shop.productGroup.dto.ProductGroupDto;
-import org.mapstruct.InheritInverseConfiguration;
+import com.mftplus.shop.uuid.UuidMapper;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 
-@Mapper(componentModel = "spring")
+@Mapper(config = CentralMapperConfig.class, uses = {UuidMapper.class, ProductGroupRepository.class})
 public interface ProductGroupMapper {
 
-    @Mapping(source = "uuId", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "parent.uuId", target = "parentId") // درست است، فقط مطمئن شوید که parent موجود باشد.
-    @Mapping(target = "childrenIds", expression = "java(mapChildrenIds(productGroup.getChildList()))")
-    ProductGroupDto toDto(ProductGroup productGroup);
+    @Mapping(target = "id", source = "productGroup.id",qualifiedByName = "mapIdToUuid")
+    @Mapping(target = "parentId", expression = "java(productGroup.getParent()!=null?uuidMapper.mapIdToUuid(productGroup.getParent().getId(),entityType):null)")
+    ProductGroupDto toDto(ProductGroup productGroup, @Context String entityType);
 
-    @InheritInverseConfiguration
-    @Mapping(target = "childList", ignore = true)
-    @Mapping(target = "parent", ignore = true) // نادیده گرفتن parent چون در DTO شناخته نمی‌شود.
-    @Mapping(target = "isDeleted", ignore = true)
-        // اگر این فیلد وجود داشته باشد باید آن را هم نادیده بگیرید.
-    ProductGroup toEntity(ProductGroupDto dto);
+    @Mapping(target = "id",source = "productGroupDto.id", qualifiedByName = "mapUuidToId")
+    @Mapping(target = "parent", expression = "java(productGroupRepository.findById(uuidMapper.mapUuidToId(productGroupDto.getParentId(),entityType)).orElse(null))")
+    ProductGroup toEntity(ProductGroupDto productGroupDto, @Context String entityType);
 
-    // متد کمکی برای تبدیل لیست childList به لیست UUID
-    default List<UUID> mapChildrenIds(List<ProductGroup> children) {
-        if (children == null) return new ArrayList<>();
-        return children.stream()
-                .map(ProductGroup::getUuId)  // تبدیل لیست childList به لیست UUID
-                .collect(Collectors.toList());
-    }
+    List<ProductGroupDto> toDtoList(List<ProductGroup> productGroupList, @Context String entityType);
+
+    List<ProductGroup> toEntityList(List<ProductGroupDto> productGroupDtoLis, @Context String entityType);
+
+    @Mapping(target = "id", ignore = true)
+    void updateFromDto(ProductGroupDto productGroupDto, @MappingTarget ProductGroup productGroup, @Context String entityType);
+
 }

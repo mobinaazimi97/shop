@@ -1,6 +1,4 @@
 package com.mftplus.shop.uuid;
-
-import com.mftplus.shop.role.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -11,15 +11,15 @@ import org.mapstruct.Mapping;
 @Mapper(config = CentralMapperConfig.class)
 public interface ProductMapper {
 
-    @Mapping(source = "uuid", target = "id")
-    @Mapping(source = "productName", target = "name")
-    @Mapping(source = "productGroup.uuId", target = "productGroupId")
-    ProductDto toDto(Product product);
-
-
-    @InheritInverseConfiguration
-    @Mapping(target = "productGroup", ignore = true)
-        // چون توی toEntity باید جداگانه تنظیم بشه
-    Product toEntity(ProductDto dto);
+//    @Mapping(source = "id", target = "uuid")
+//    @Mapping(source = "productName", target = "name")
+//    @Mapping(source = "productGroup.uuId", target = "productGroupId")
+//    ProductDto toDto(Product product);
+//
+//
+//    @InheritInverseConfiguration
+//    @Mapping(target = "productGroup", ignore = true)
+//        // چون توی toEntity باید جداگانه تنظیم بشه
+//    Product toEntity(ProductDto dto);
 
 }

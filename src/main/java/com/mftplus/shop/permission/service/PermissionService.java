@@ -9,6 +9,7 @@ import com.mftplus.shop.permission.repository.PermissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +22,8 @@ public class PermissionService {
 
     @Transactional
     public PermissionDto save(PermissionDto permissionDto) {
-        Permission permission = permissionMapper.toEntity(permissionDto);
-        return permissionMapper.toDto(permissionRepository.save(permission));
+        Permission permission = permissionMapper.toEntity(permissionDto, "Permission");
+        return permissionMapper.toDto(permissionRepository.save(permission), "Permission");
     }
 
     @Transactional
@@ -36,20 +37,20 @@ public class PermissionService {
     public List<PermissionDto> findAll() {
         return permissionRepository.findAll()
                 .stream()
-                .map(permissionMapper::toDto)
+                .map(p -> permissionMapper.toDto(p, "Permission"))
                 .collect(Collectors.toList());
     }
 
     public PermissionDto findById(Long id) {
         Permission permission = permissionRepository.findById(id).get();
-        return permissionMapper.toDto(permission);
+        return permissionMapper.toDto(permission, "Permission");
     }
 
     @Transactional
-    public PermissionDto update(Long id,PermissionDto permissionDto) {
+    public PermissionDto update(Long id, PermissionDto permissionDto) {
         Permission permission = permissionRepository.findById(id).get();
-        permissionMapper.updateFromDto(permissionDto, permission);
-        return permissionMapper.toDto(permissionRepository.save(permission));
+        permissionMapper.updateFromDto(permissionDto, permission, "Permission");
+        return permissionMapper.toDto(permissionRepository.save(permission), "Permission");
     }
 
     @Transactional

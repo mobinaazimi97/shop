@@ -27,12 +27,12 @@ public class UserService{
 
     public UserDto findByUsername(String username) {
         User user = userRepository.findByUsername(username).get();
-        return userMapper.toDto(user);
+        return userMapper.toDto(user, "User");
     }
 
     @Transactional
     public UserDto save(UserDto userDto) {
-        User user = userMapper.toEntity(userDto);
+        User user = userMapper.toEntity(userDto, "User");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Set<Role> roles = user.getRoleSet().stream()
                 .map(role -> roleRepository.findByRoleName(role.getRoleName())
@@ -41,7 +41,7 @@ public class UserService{
         user.setRoleSet(roles);
         user.setCredentialsExpiryDate(LocalDateTime.now().plusMonths(6));
         User savedUser = userRepository.save(user);
-        return userMapper.toDto(savedUser);
+        return userMapper.toDto(savedUser, "User");
     }
 
     @Transactional
@@ -55,20 +55,20 @@ public class UserService{
     public List<UserDto> findAll() {
         return userRepository.findAll()
                 .stream()
-                .map(userMapper::toDto)
+                .map(u -> userMapper.toDto(u, "User"))
                 .collect(Collectors.toList());
     }
 
     public UserDto findById(Long id) {
         User user = userRepository.findById(id).get();
-        return userMapper.toDto(user);
+        return userMapper.toDto(user, "User");
     }
 
     @Transactional
     public UserDto update(Long id,UserDto userDto) {
         User user = userRepository.findById(id).get();
-        userMapper.updateFromDto(userDto, user);
-        return userMapper.toDto(userRepository.save(user));
+        userMapper.updateFromDto(userDto, user, "User");
+        return userMapper.toDto(userRepository.save(user), "User");
     }
 
     @Transactional

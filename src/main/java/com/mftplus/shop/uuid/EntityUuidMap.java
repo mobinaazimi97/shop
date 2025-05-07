@@ -13,7 +13,7 @@ import java.util.UUID;
 @SuperBuilder
 @NoArgsConstructor
 
-@Entity
+@Entity(name = "uuIdEntity")
 @Table(name = "entity_uuid_map")
 public class EntityUuidMap {
     @Id

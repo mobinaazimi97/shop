@@ -9,16 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.UUID;
 
 @Mapper(config = CentralMapperConfig.class)
-public abstract class UuidMapper {
+public abstract class TwoUuidMapper {
     @Autowired
     protected UuidService uuidService;
 
-    public UUID map(Long id, @Context String entityType) {
-        return (id == null) ? null : uuidService.getOrCreateUuid(entityType, id);
+    @Named("mapIdToUuid")
+    public UUID map(Long id, @Context String type) {
+        return (id == null) ? null : uuidService.getOrCreateUuid(type, id);
     }
 
-    public Long map(UUID uuid, @Context String entityType) {
-        return (uuid == null) ? null : uuidService.getEntityIdByUuid(entityType, uuid);
+    @Named("mapUuidToId")
+    public Long map(UUID uuid, @Context String type) {
+        return (uuid == null) ? null : uuidService.getEntityIdByUuid(type, uuid);
     }
 
 }
