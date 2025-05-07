@@ -16,12 +16,12 @@ import java.util.List;
 @Mapper(config = CentralMapperConfig.class, uses = {UuidMapper.class, ProductGroupRepository.class})
 public interface ProductGroupMapper {
 
-    @Mapping(target = "id", source = "productGroup.id",qualifiedByName = "mapIdToUuid")
-    @Mapping(target = "parentId", expression = "java(productGroup.getParent()!=null?uuidMapper.mapIdToUuid(productGroup.getParent().getId(),entityType):null)")
+//    @Mapping(target = "id", source = "productGroup.id",qualifiedByName = "mapIdToUuid")
+//    @Mapping(target = "parentId", expression = "java(productGroup.getParent()!=null?uuidMapper.mapIdToUuid(productGroup.getParent().getId(),entityType):null)")
     ProductGroupDto toDto(ProductGroup productGroup, @Context String entityType);
 
-    @Mapping(target = "id",source = "productGroupDto.id", qualifiedByName = "mapUuidToId")
-    @Mapping(target = "parent", expression = "java(productGroupRepository.findById(uuidMapper.mapUuidToId(productGroupDto.getParentId(),entityType)).orElse(null))")
+//    @Mapping(target = "id",source = "productGroupDto.id", qualifiedByName = "mapUuidToId")
+//    @Mapping(target = "parent", expression = "java(productGroupRepository.findById(uuidMapper.mapUuidToId(productGroupDto.getParentId(),entityType)).orElse(null))")
     ProductGroup toEntity(ProductGroupDto productGroupDto, @Context String entityType);
 
     List<ProductGroupDto> toDtoList(List<ProductGroup> productGroupList, @Context String entityType);

@@ -29,9 +29,6 @@ public class ProductGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "uuid", unique = true)
-//    private UUID id = UUID.randomUUID();
-
     @Column(name = "p_title")
     private String title;
 
