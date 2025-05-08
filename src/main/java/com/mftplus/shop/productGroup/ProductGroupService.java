@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -60,10 +61,22 @@ public class ProductGroupService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public ProductGroupDto findById(Long id) {
         ProductGroup productGroup = productGroupRepository.findById(id).orElse(null);
         return productGroupMapper.toDto(productGroup, "ProductGroup");
     }
+
+    //todo
+    @Transactional
+    public ProductGroupDto getByUuid(UUID uuid) {
+        Long productGroupId = uuidMapper.map(uuid, "ProductGroup"); // تبدیل UUID به Long ID
+        ProductGroup productGroup = productGroupRepository.findById(productGroupId)
+                .orElseThrow(() -> new EntityNotFoundException("Product group not found for UUID"));
+
+        return productGroupMapper.toDto(productGroup, "ProductGroup"); // تبدیل entity به DTO با UUID
+    }
+
 
     public void delete(Long id) {
         ProductGroup group = productGroupRepository.findById(id)

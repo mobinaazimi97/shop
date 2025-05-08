@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -46,4 +47,10 @@ public class PGController {
         ProductGroupDto productGroupDto = productGroupService.findById(id);
         return ResponseEntity.ok(productGroupDto);
     }
+
+    @GetMapping("/uuid/{uuid}")
+    public ResponseEntity<ProductGroupDto> getProductGroup(@PathVariable UUID uuid) {
+        return ResponseEntity.ok(productGroupService.getByUuid(uuid));
+    }
+
 }
