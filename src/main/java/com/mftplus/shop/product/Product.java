@@ -13,7 +13,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 @NoArgsConstructor
@@ -29,8 +28,8 @@ import java.util.UUID;
 
 public class Product {
     @Id
-    @GeneratedValue
-    private UUID uuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "product_name", length = 30,nullable = false,unique = true) //todo nullable...
     private String productName;
@@ -39,7 +38,7 @@ public class Product {
     @Min(value = 0, message = "Cant be negative")
     private Float price;
 
-    @Column(name = "product_code")
+    @Column(name = "serialId")
     private String code;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -59,5 +58,16 @@ public class Product {
 
     @Column(name = "description")
     private String description;
+
+    public void addPropertyValue(PropertyValue propertyValue) {
+        propertyValues.add(propertyValue);
+        propertyValue.setProduct(this);
+    }
+
+    // متد برای حذف PropertyValue از Product
+    public void removePropertyValue(PropertyValue propertyValue) {
+        propertyValues.remove(propertyValue);
+        propertyValue.setProduct(null);
+    }
 
 }

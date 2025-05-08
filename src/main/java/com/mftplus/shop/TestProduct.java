@@ -4,9 +4,9 @@ package com.mftplus.shop;
 import com.mftplus.shop.groupProperty.GroupPropertyService;
 import com.mftplus.shop.groupProperty.dto.GroupPropertyDto;
 import com.mftplus.shop.product.ProductService;
+import com.mftplus.shop.product.dto.ProductDto;
 import com.mftplus.shop.productGroup.ProductGroupService;
 import com.mftplus.shop.productGroup.dto.ProductGroupDto;
-import com.mftplus.shop.productPropertyValue.PropertyValue;
 import com.mftplus.shop.productPropertyValue.PropertyValueService;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import org.springframework.boot.CommandLineRunner;
@@ -50,13 +50,22 @@ public class TestProduct implements CommandLineRunner {
 
         System.out.println("groupPropertyDto saved: " + savedGroupProperty);
 
-//        GroupPropertyDto groupPropertyDto = GroupPropertyDto.builder()
-//                .name("coffee") // this now maps to 'groupName'
-//                .productGroupId(savedMobilePhones.getId())
-//                .build();
-//                System.out.println("groupPropertyDto saved : "+groupPropertyDto);
+
+        PropertyValueDto propertyValueDto = PropertyValueDto.builder()
+                .value("64")
+                .groupPropertyId(savedGroupProperty.getId())
+                .build();
 
 
+        ProductDto productDto = ProductDto.builder()
+                .price(23F)
+                .productGroupId(savedMobilePhones.getId())
+                .productName("laptop")
+                .code("aasssas")
+                .description("this as laptop lenovo")
+                .propertyValues(List.of(propertyValueDto))
+                .build();
+        productService.save(productDto);
 
     }
 

@@ -10,7 +10,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
 
 @NoArgsConstructor
 @Setter
@@ -25,8 +24,8 @@ import java.util.UUID;
 public class PropertyValue {
 
     @Id
-    @GeneratedValue
-    private UUID uuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "propertyName")
     private String propertyName;

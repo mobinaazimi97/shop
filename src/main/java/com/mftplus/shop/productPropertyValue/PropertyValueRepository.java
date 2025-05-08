@@ -7,13 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
 
 @Repository
-public interface PropertyValueRepository extends JpaRepository<PropertyValue, UUID> {
+public interface PropertyValueRepository extends JpaRepository<PropertyValue, Long> {
 
     @Modifying
-    @Query("update valueEntity v set v.isDeleted=true where v.uuid= :uuid")
+    @Query("update valueEntity v set v.isDeleted=true where v.id= :id")
     @Transactional
-    void logicalRemove(@Param("uuid") UUID uuid);
+    void logicalRemove(@Param("id") Long id);
 }
