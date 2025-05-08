@@ -46,7 +46,7 @@ public class SecurityConfig {
 
 
     // Constants for header values used in HTTP security headers
-//    public static final String CONTENT_SECURITY_POLICY = "default-src 'self'; script-src 'self'; object-src 'none'; style-src 'self'; img-src 'self'; frame-ancestors 'self';";
+    public static final String CONTENT_SECURITY_POLICY = "default-src 'self'; script-src 'self'; object-src 'none'; style-src 'self'; img-src 'self'; frame-ancestors 'self';";
     public static final String X_CONTENT_TYPE_OPTIONS = "nosniff";
     public static final String X_XSS_PROTECTION = "1; mode=block";
     public static final String CACHE_CONTROL = "no-store, no-cache, must-revalidate, max-age=0";
@@ -74,7 +74,7 @@ public class SecurityConfig {
 
         http
                 // CORS Configuration
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom configuration
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom configuration
 
                 // Disable CSRF Protection (needed for stateless APIs)
                 .csrf(AbstractHttpConfigurer::disable)

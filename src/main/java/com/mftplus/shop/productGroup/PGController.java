@@ -1,14 +1,13 @@
 package com.mftplus.shop.productGroup;
 
 
-import com.mftplus.shop.exceptions.ResourceNotFoundException;
 import com.mftplus.shop.productGroup.dto.ProductGroupDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/pGroups")
@@ -25,26 +24,26 @@ public class PGController {
         return new ResponseEntity<>(savedProductGroupDto, HttpStatus.CREATED);
     }
 
-//    @PutMapping
-//    public ResponseEntity<ProductGroupDto> updateProductGroup(@RequestBody ProductGroupDto productGroupDto) throws ResourceNotFoundException {
-//        return ResponseEntity.ok(productGroupService.update(productGroupDto.getId(), productGroupDto));
-//    }
-//
-//    @DeleteMapping("/{uuId}")
-//    public ResponseEntity<Void> deleteProductGroupById(@PathVariable UUID uuId) {
-//        productGroupService.delete(uuId);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<List<ProductGroupDto>> getAllProductGroups() {
-//        List<ProductGroupDto> productGroups = productGroupService.findAll();
-//        return new ResponseEntity<>(productGroups, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/{uuId}")
-//    public ResponseEntity<ProductGroupDto> getProductGroupById(@PathVariable UUID uuId) {
-//        ProductGroupDto productGroupDto = productGroupService.findById(uuId);
-//        return ResponseEntity.ok(productGroupDto);
-//    }
+    @PutMapping
+    public ResponseEntity<ProductGroupDto> updateProductGroup(@RequestBody ProductGroupDto productGroupDto, @RequestBody Long id) {
+        return ResponseEntity.ok(productGroupService.update(id, productGroupDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProductGroupById(@PathVariable Long id) {
+        productGroupService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductGroupDto>> getAllProductGroups() {
+        List<ProductGroupDto> productGroups = productGroupService.findAll();
+        return new ResponseEntity<>(productGroups, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductGroupDto> getProductGroupById(@PathVariable Long id) {
+        ProductGroupDto productGroupDto = productGroupService.findById(id);
+        return ResponseEntity.ok(productGroupDto);
+    }
 }

@@ -40,6 +40,7 @@ public class TestProduct implements CommandLineRunner {
         mobilePhonesDto.setTitle("Mobile Phones");
         mobilePhonesDto.setParentId(savedElectronics.getId());
         ProductGroupDto savedMobilePhones = productGroupService.save(mobilePhonesDto);
+        System.out.println("product group by id : "+productGroupService.findById(2L));
 
         GroupPropertyDto groupPropertyDto = GroupPropertyDto.builder()
                 .groupName("size") // فیلد 'name' به groupName در entity map میشه

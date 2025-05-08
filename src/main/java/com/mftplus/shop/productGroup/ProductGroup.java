@@ -40,7 +40,7 @@ public class ProductGroup {
     @ManyToOne
     @JsonInclude(JsonInclude.Include.NON_NULL) // شامل کردن فقط در صورت غیر null بودن
     @JsonIgnoreProperties({"propertyValues"})
-    @JsonProperty("parent") // به صورت parent نمایش داده شود
+    @JsonProperty("parentId") // به صورت parent نمایش داده شود
     @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_parent_group"))
     private ProductGroup parent;
 

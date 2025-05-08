@@ -15,6 +15,7 @@ import java.util.List;
 
 @Mapper(config = CentralMapperConfig.class, uses = {UuidMapper.class, ProductGroupRepository.class})
 public interface ProductGroupMapper {
+    @Mapping(target = "parentId", source = "parent.id") // استفاده از parent.id برای پر کردن parentId در DTO
     ProductGroupDto toDto(ProductGroup productGroup, @Context String entityType);
 
     ProductGroup toEntity(ProductGroupDto productGroupDto, @Context String entityType);

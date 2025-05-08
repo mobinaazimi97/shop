@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -27,10 +29,9 @@ public class ProductGroupService {
 
     @Transactional
     public ProductGroupDto save(ProductGroupDto productGroupDto) {
-
         ProductGroup entity = productGroupMapper.toEntity(productGroupDto, "ProductGroup");
 
-        // اگر parentId وجود دارد، parent را تنظیم کن
+        // اگر parentId وجود دارد، باید parent را تنظیم کنیم
         if (productGroupDto.getParentId() != null) {
             Long parentId = uuidMapper.map(productGroupDto.getParentId(), "ProductGroup");
             ProductGroup parent = productGroupRepository.findById(parentId)
@@ -44,72 +45,30 @@ public class ProductGroupService {
         // تبدیل entity ذخیره‌شده به DTO
         return productGroupMapper.toDto(saved, "ProductGroup");
     }
-//        ProductGroup productGroup = productGroupMapper.toEntity(productGroupDto, "ProductGroup");
-//        ProductGroup savedProductGroup = productGroupRepository.save(productGroup);
-//        return productGroupMapper.toDto(savedProductGroup, "ProductGroup");
 
-//        if (productGroupDto.getParentId() == null) {
-//            ProductGroup productGroup = productGroupMapper.toEntity(productGroupDto, "ProductGroupParent");
-//            ProductGroup savedProductGroup = productGroupRepository.save(productGroup);
-//            return productGroupMapper.toDto(savedProductGroup, "ProductGroupParent");
-//
-//        }else {
-//            ProductGroup productGroup = productGroupMapper.toEntity(productGroupDto, "ProductGroup");
-//            ProductGroup savedProductGroup = productGroupRepository.save(productGroup);
-//            return productGroupMapper.toDto(savedProductGroup, "ProductGroup");
+    @Transactional
+    public ProductGroupDto update(Long id, ProductGroupDto productGroupDto) {
+        ProductGroup productGroup = productGroupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product group not found to update "));
+        productGroupMapper.updateFromDto(productGroupDto, productGroup, "ProductGroup");
+        return productGroupMapper.toDto(productGroupRepository.save(productGroup), "ProductGroup");
+    }
 
+    public List<ProductGroupDto> findAll() {
+        return productGroupRepository.findAll()
+                .stream()
+                .map(p -> productGroupMapper.toDto(p, "ProductGroup"))
+                .collect(Collectors.toList());
+    }
 
-        // Convert DTO to Entity
+    public ProductGroupDto findById(Long id) {
+        ProductGroup productGroup = productGroupRepository.findById(id).orElse(null);
+        return productGroupMapper.toDto(productGroup, "ProductGroup");
+    }
 
-        // Save the entity
-//        ProductGroup savedProductGroup = productGroupRepository.save(productGroup);
-//         Convert back to DTO and return
-//        return productGroupMapper.toDto(savedProductGroup, "ProductGroup");
-
-
-//    public ProductGroupDto findById(UUID id) {
-//
-//    }
-
-
-//    public ProductGroupDto update(UUID uuId, ProductGroupDto productGroupDto) throws ResourceNotFoundException {
-//        ProductGroup productGroup = productGroupRepository.findById(uuId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Group not found with id: " + uuId));
-//
-//        productGroup.setTitle(productGroupDto.getTitle());
-//
-//        if (productGroupDto.getParentId() != null) {
-//            ProductGroup parent = productGroupRepository.findById(productGroupDto.getParentId())
-//                    .orElseThrow(() -> new ResourceNotFoundException("Parent group not found with id: " + productGroupDto.getParentId()));
-//            productGroup.setParent(parent);
-//        } else {
-//            productGroup.setParent(null);
-//        }
-//        ProductGroup updatedProductGroup = productGroupRepository.save(productGroup);
-//        return productGroupMapper.toDto(updatedProductGroup);
-//    }
-//
-//    public List<ProductGroupDto> findAll() {
-//        return productGroupRepository.findAll().stream()
-//                .filter(g -> !g.isDeleted())
-//                .map(productGroupMapper::toDto)
-//                .toList();
-//    }
-//
-//    public ProductGroupDto findById(UUID uuId) {
-//        ProductGroup productGroup = productGroupRepository.findById(uuId)
-//                .filter(g -> !g.isDeleted())
-//                .orElseThrow(() -> new RuntimeException("Group not found"));
-//        return productGroupMapper.toDto(productGroup);
-//    }
-//
-//    public void delete(UUID uuId) {
-//        ProductGroup group = productGroupRepository.findByUuIdAndIsDeletedFalse(uuId)
-//                .orElseThrow(() -> new EntityNotFoundException("Product group not found or already deleted: " + uuId));
-//
-//        group.setDeleted(true);
-//        productGroupRepository.save(group);
-//    }
-
-
+    public void delete(Long id) {
+        ProductGroup group = productGroupRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product group not found or already deleted: " + id));
+        group.setDeleted(true);
+        productGroupRepository.save(group);
+    }
 }
