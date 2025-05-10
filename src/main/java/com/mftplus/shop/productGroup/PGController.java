@@ -25,14 +25,18 @@ public class PGController {
         return new ResponseEntity<>(savedProductGroupDto, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<ProductGroupDto> updateProductGroup(@RequestBody ProductGroupDto productGroupDto, @RequestBody Long id) {
-        return ResponseEntity.ok(productGroupService.update(id, productGroupDto));
+    @PutMapping("/{uuid}")
+    public ResponseEntity<ProductGroupDto> updateProductGroup(
+            @PathVariable UUID uuid,
+            @RequestBody ProductGroupDto dto) {
+
+        ProductGroupDto updatedDto = productGroupService.updateByUuid(uuid, dto);
+        return ResponseEntity.ok(updatedDto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProductGroupById(@PathVariable Long id) {
-        productGroupService.delete(id);
+    @DeleteMapping("/remove/{uuid}")
+    public ResponseEntity<Void> deleteProductGroupById(@PathVariable UUID uuid) {
+        productGroupService.logicalRemove(uuid);
         return ResponseEntity.ok().build();
     }
 

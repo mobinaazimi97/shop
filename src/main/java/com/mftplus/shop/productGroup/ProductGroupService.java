@@ -48,11 +48,33 @@ public class ProductGroupService {
     }
 
     @Transactional
-    public ProductGroupDto update(Long id, ProductGroupDto productGroupDto) {
-        ProductGroup productGroup = productGroupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product group not found to update "));
-        productGroupMapper.updateFromDto(productGroupDto, productGroup, "ProductGroup");
-        return productGroupMapper.toDto(productGroupRepository.save(productGroup), "ProductGroup");
+    public ProductGroupDto updateByUuid(UUID uuid, ProductGroupDto dto) {
+        Long entityId = uuidMapper.map(uuid, "ProductGroup");
+
+        ProductGroup entity = productGroupRepository.findById(entityId)
+                .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found for UUID: " + uuid));
+
+        // به‌روزرسانی فیلدهای ساده (title و ...)
+        productGroupMapper.updateFromDto(dto, entity, "ProductGroup");
+
+        // به‌روزرسانی parent (در صورت وجود)
+        if (dto.getParentId() != null) {
+            Long parentId = uuidMapper.map(dto.getParentId(), "ProductGroup");
+            ProductGroup parent = productGroupRepository.findById(parentId)
+                    .orElseThrow(() -> new EntityNotFoundException("Parent ProductGroup not found"));
+            entity.setParent(parent);
+        } else {
+            entity.setParent(null);
+        }
+
+        // childrenIds فقط در DTO هست و در این مرحله نیازی به update اونا نیست
+        // اگر بخوای آپدیت children هم انجام بشه، باید جدا مدیریت بشه
+
+        // ذخیره و بازگشت DTO به همراه UUID
+        ProductGroup saved = productGroupRepository.save(entity);
+        return productGroupMapper.toDto(saved, "ProductGroup");
     }
+
 
     public List<ProductGroupDto> findAll() {
         return productGroupRepository.findAll()
@@ -67,7 +89,6 @@ public class ProductGroupService {
         return productGroupMapper.toDto(productGroup, "ProductGroup");
     }
 
-    //todo
     @Transactional
     public ProductGroupDto getByUuid(UUID uuid) {
         Long productGroupId = uuidMapper.map(uuid, "ProductGroup"); // تبدیل UUID به Long ID
@@ -78,10 +99,12 @@ public class ProductGroupService {
     }
 
 
-    public void delete(Long id) {
-        ProductGroup group = productGroupRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product group not found or already deleted: " + id));
-        group.setDeleted(true);
-        productGroupRepository.save(group);
+    public void logicalRemove(UUID uuid) {
+        Long productGroupId = uuidMapper.map(uuid, "ProductGroup");
+
+        ProductGroup productGroup = productGroupRepository.findById(productGroupId)
+                .orElseThrow(() -> new EntityNotFoundException("Product group not found or already deleted: " + productGroupId));
+        productGroup.setDeleted(true);
+        productGroupRepository.save(productGroup);
     }
 }

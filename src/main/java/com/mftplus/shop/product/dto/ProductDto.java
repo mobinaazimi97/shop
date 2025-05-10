@@ -1,5 +1,6 @@
 package com.mftplus.shop.product.dto;
 
+import com.mftplus.shop.productGroup.dto.ProductGroupDto;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,5 +21,6 @@ public class ProductDto {
     private String description;
     private String code;
     private UUID productGroupId;
+    private String productGroupTitle; // عنوان گروه محصول جدید
     private List<PropertyValueDto> propertyValues; // لیست از PropertyValueDto
 }
