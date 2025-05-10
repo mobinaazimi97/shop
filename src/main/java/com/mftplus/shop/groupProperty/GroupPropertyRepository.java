@@ -15,12 +15,8 @@ public interface GroupPropertyRepository extends JpaRepository<GroupProperty, Lo
     @Query("select g from groupProEntity g where g.groupName = :groupName")
     Optional<GroupProperty> findByName(@Param("groupName") String groupName);
 
-    @Query("select g from groupProEntity g where g.productGroup.id=:id")
-    Optional<GroupProperty>findByProductGroupId(@Param("id") Long id);
-
-
     @Modifying
-    @Query("update groupProEntity g set g.isDeleted=true where g.id= :uuid")
+    @Query("update groupProEntity g set g.isDeleted=true where g.id= :id")
     @Transactional
     void logicalRemove(@Param("id") Long id);
 

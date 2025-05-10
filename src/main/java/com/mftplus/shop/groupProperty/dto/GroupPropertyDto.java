@@ -15,6 +15,4 @@ public class GroupPropertyDto {
 
     private UUID id;
     private String groupName;
-    private UUID productGroupId;
-
 }

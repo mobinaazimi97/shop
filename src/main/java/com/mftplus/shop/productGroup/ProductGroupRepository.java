@@ -19,8 +19,8 @@ public interface ProductGroupRepository extends JpaRepository<ProductGroup, Long
 
 //    @Query("select p from productGroupEntity p where p.id = :id")
 //    Optional<ProductGroup> findByUuid(@Param("uuid") Long uuId);
-    @Query("select p from productGroupEntity p where p.isDeleted=false")
-    List<ProductGroup> findByIsDeletedFalse();
+//    @Query("select p from productGroupEntity p where p.isDeleted=false")
+//    List<ProductGroup> findByIsDeletedFalse();
 
 
     @Modifying

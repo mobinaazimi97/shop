@@ -1,5 +1,6 @@
 package com.mftplus.shop.productGroup.dto;
 
+import com.mftplus.shop.groupProperty.dto.GroupPropertyDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,14 +19,5 @@ public class ProductGroupDto {
     private String title;
     private UUID parentId;
     private List<UUID> childrenIds = new ArrayList<>();
-
-
-//    public ProductGroup toEntity(ProductGroup parent) {
-//        ProductGroup group = new ProductGroup();
-//        group.setId(this.id != null ? this.id : UUID.randomUUID()); // اگر id وجود نداشت خودکار تولید می‌شود
-//        group.setTitle(this.title);
-//        group.setParent(parent);
-//        return group;
-//    }
-
+    private GroupPropertyDto groupPropertyDto;
 }

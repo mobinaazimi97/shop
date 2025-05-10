@@ -1,6 +1,7 @@
 package com.mftplus.shop.productGroup.mapper;
 
 import com.mftplus.shop.config.CentralMapperConfig;
+import com.mftplus.shop.groupProperty.GroupPropertyRepository;
 import com.mftplus.shop.productGroup.ProductGroup;
 import com.mftplus.shop.productGroup.ProductGroupRepository;
 import com.mftplus.shop.productGroup.dto.ProductGroupDto;
@@ -13,9 +14,9 @@ import org.mapstruct.MappingTarget;
 import java.util.List;
 
 
-@Mapper(config = CentralMapperConfig.class, uses = {UuidMapper.class, ProductGroupRepository.class})
+@Mapper(config = CentralMapperConfig.class, uses = {UuidMapper.class, ProductGroupRepository.class, GroupPropertyRepository.class})
 public interface ProductGroupMapper {
-    @Mapping(target = "parentId", source = "parent.id") // استفاده از parent.id برای پر کردن parentId در DTO
+    @Mapping(target = "parentId", source = "parent.id")
     ProductGroupDto toDto(ProductGroup productGroup, @Context String entityType);
 
     ProductGroup toEntity(ProductGroupDto productGroupDto, @Context String entityType);

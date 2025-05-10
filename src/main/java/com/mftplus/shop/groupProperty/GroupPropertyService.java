@@ -26,20 +26,20 @@ public class GroupPropertyService {
         this.uuidMapper = uuidMapper;
     }
 
-    @Transactional
-    public GroupPropertyDto save(GroupPropertyDto groupPropertyDto) {
-        GroupProperty groupProperty = groupPropertyMapper.toEntity(groupPropertyDto, "GroupProperty");
-
-        if (groupPropertyDto.getProductGroupId() != null) {
-            Long productGroupId = uuidMapper.map(groupPropertyDto.getProductGroupId(), "ProductGroup");
-            ProductGroup productGroup = productGroupRepository.findById(productGroupId)
-                    .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found"));
-            groupProperty.setProductGroup(productGroup);
-        }
-
-        GroupProperty saved = groupPropertyRepository.save(groupProperty);
-        return groupPropertyMapper.toDto(saved, "GroupProperty");
-    }
+//    @Transactional
+//    public GroupPropertyDto save(GroupPropertyDto groupPropertyDto) {
+//        GroupProperty groupProperty = groupPropertyMapper.toEntity(groupPropertyDto, "GroupProperty");
+//
+//        if (groupPropertyDto.getProductGroupId() != null) {
+//            Long productGroupId = uuidMapper.map(groupPropertyDto.getProductGroupId(), "ProductGroup");
+//            ProductGroup productGroup = productGroupRepository.findById(productGroupId)
+//                    .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found"));
+//            groupProperty.setProductGroup(productGroup);
+//        }
+//
+//        GroupProperty saved = groupPropertyRepository.save(groupProperty);
+//        return groupPropertyMapper.toDto(saved, "GroupProperty");
+//    }
 
 
 //    public GroupPropertyDto update(UUID uuid, GroupPropertyDto dto) {

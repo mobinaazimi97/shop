@@ -1,13 +1,11 @@
 package com.mftplus.shop.groupProperty;
 
-import com.mftplus.shop.productGroup.ProductGroup;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
 
 
 @NoArgsConstructor
@@ -23,13 +21,10 @@ public class GroupProperty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "property",length = 100)
+    @Column(name = "property", length = 100)
     private String groupName;
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    @ManyToOne
-    @JoinColumn(name = "productGroup_id")
-    private ProductGroup productGroup;
 }
