@@ -209,23 +209,12 @@ public class ProductGroupService {
         List<ProductGroup> result = productGroupRepository.findByParentTitle(parentTitle);
         return productGroupMapper.toDtoList(result, "ProductGroup");
     }
-
-//    @Transactional(readOnly = true)
-//    public List<ProductGroupDto> findByParentTitle(String title) {
-//        Long parentId = uuidMapper.map(parentUuid, "ProductGroup");
-//        List<ProductGroup> result = productGroupRepository.findByParentId(parentId);
-//        return productGroupMapper.toDtoList(result, "ProductGroup");
-//    }
-
-
     @Transactional
     public List<ProductGroupDto> getByTitle(String title) {
         return productGroupRepository.findByTitle(title)
                 .stream()
                 .map(p -> productGroupMapper.toDto(p, "ProductGroup"))
                 .collect(Collectors.toList());
-//        ProductGroup productGroup = productGroupRepository.findByTitle(title).orElse(null);
-//        return productGroupMapper.toDto(productGroup, "ProductGroup");
     }
 
 

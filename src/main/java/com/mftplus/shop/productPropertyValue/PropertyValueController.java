@@ -1,12 +1,12 @@
 package com.mftplus.shop.productPropertyValue;
 
-import com.mftplus.shop.groupProperty.dto.GroupPropertyDto;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/values")
@@ -24,15 +24,35 @@ public class PropertyValueController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPropertyValueDto);
     }
 
+    @PutMapping("/{uuid}")
+    public ResponseEntity<PropertyValueDto> updatePropertyValue(
+            @PathVariable UUID uuid,
+            @RequestBody PropertyValueDto propertyValueDto) {
+
+        PropertyValueDto updated = propertyValueService.update(uuid, propertyValueDto);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/remove/{uuid}")
+    public ResponseEntity<Void> deleteValueById(@PathVariable UUID uuid) {
+        propertyValueService.logicalRemove(uuid);
+        return ResponseEntity.ok().build();
+    }
+
+
     @GetMapping
     public ResponseEntity<List<PropertyValueDto>> getAllPropertyValues() {
         List<PropertyValueDto> propertyValueDtos = propertyValueService.findAll();
-
-        // بررسی اینکه آیا داده‌ای پیدا شده یا خیر
         if (propertyValueDtos.isEmpty()) {
-            return ResponseEntity.noContent().build(); // اگر لیست خالی است، 204 No Content را باز می‌گرداند
+            return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(propertyValueDtos); // در غیر این صورت 200 OK با داده‌ها را باز می‌گرداند
+        return ResponseEntity.ok(propertyValueDtos);
     }
+
+    @GetMapping("/uuid/{uuid}")
+    public ResponseEntity<PropertyValueDto> getValueById(@PathVariable UUID uuid) {
+        return ResponseEntity.ok(propertyValueService.getByUuid(uuid));
+    }
+
 }

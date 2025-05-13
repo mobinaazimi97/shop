@@ -1,7 +1,6 @@
 package com.mftplus.shop.productPropertyValue;
 
-import com.mftplus.shop.groupProperty.GroupPropertyRepository;
-import com.mftplus.shop.product.ProductRepository;
+import com.mftplus.shop.productGroup.ProductGroupService;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import com.mftplus.shop.productPropertyValue.mapper.PropertyValueMapper;
 import com.mftplus.shop.uuid.UuidMapper;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -21,7 +21,7 @@ public class PropertyValueService {
     private final PropertyValueMapper propertyValueMapper;
     private final UuidMapper uuidMapper;
 
-    public PropertyValueService(PropertyValueRepository propertyValueRepository, PropertyValueMapper propertyValueMapper, UuidMapper uuidMapper) {
+    public PropertyValueService(PropertyValueRepository propertyValueRepository, PropertyValueMapper propertyValueMapper, UuidMapper uuidMapper, ProductGroupService productGroupService) {
         this.propertyValueRepository = propertyValueRepository;
         this.propertyValueMapper = propertyValueMapper;
         this.uuidMapper = uuidMapper;
@@ -38,26 +38,25 @@ public class PropertyValueService {
         return propertyValueMapper.toDto(savedPropertyValue, "PropertyValue");
     }
 
-//    @Transactional
-//    public PropertyValueDto save(PropertyValueDto propertyValueDto) {
-//        // تبدیل PropertyValueDto به PropertyValue entity
-//        PropertyValue propertyValue = propertyValueMapper.toEntity(propertyValueDto, "PropertyValue");
-//
-//        // تنظیم Product از طریق UUID
-//        if (propertyValueDto.getId() != null) {
-//            Long propertyValueId = uuidMapper.map(propertyValueDto.getId(), "Product");
-//            PropertyValue propertyValue1 = propertyValueRepository.findById(propertyValueId)
-//                    .orElseThrow(() -> new EntityNotFoundException("Product not found"));
-//            propertyValue.setValue(propertyValue.getValue());
-//            propertyValue.setDeleted(false);
-//            propertyValueRepository.save(propertyValue);
-//        }
-//
-//        PropertyValue savedPropertyValue = propertyValueRepository.save(propertyValue);
-//
-//        // تبدیل PropertyValue entity به PropertyValueDto
-//        return propertyValueMapper.toDto(savedPropertyValue, "PropertyValue");
-//    }
+    @Transactional
+    public PropertyValueDto update(UUID uuid, PropertyValueDto dto) {
+        // تبدیل UUID به ID واقعی
+        Long id = uuidMapper.map(uuid, "PropertyValue");
+
+        // دریافت entity موجود
+        PropertyValue entity = propertyValueRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("PropertyValue not found"));
+
+        // به‌روزرسانی فیلدها
+        entity.setValue(dto.getValue());
+
+        // ذخیره تغییرات
+        PropertyValue updated = propertyValueRepository.save(entity);
+
+        // تبدیل به DTO و بازگشت
+        return propertyValueMapper.toDto(updated, "PropertyValue");
+    }
+
     @Transactional
     public List<PropertyValueDto> findAll() {
         return propertyValueRepository.findAll()
@@ -66,7 +65,17 @@ public class PropertyValueService {
                 .collect(Collectors.toList());
     }
 
-    public void logicalRemove(Long id) {
-        propertyValueRepository.logicalRemove(id);
+    @Transactional
+    public PropertyValueDto getByUuid(UUID uuid) {
+        Long propertyValueId = uuidMapper.map(uuid, "PropertyValue"); // تبدیل UUID به Long ID
+        PropertyValue propertyValue = propertyValueRepository.findById(propertyValueId)
+                .orElseThrow(() -> new EntityNotFoundException("PropertyValue not found for UUID"));
+
+        return propertyValueMapper.toDto(propertyValue, "PropertyValue"); // تبدیل entity به DTO با UUID
+    }
+
+    public void logicalRemove(UUID uuid) {
+        Long propertyValueId = uuidMapper.map(uuid, "PropertyValue");
+        propertyValueRepository.logicalRemove(propertyValueId);
     }
 }
