@@ -24,23 +24,8 @@ public class GroupPropertyController {
 
     @PostMapping
     public ResponseEntity<GroupPropertyDto> createOrUpdateGroupProperty(@RequestBody GroupPropertyDto groupPropertyDto) {
-        // فراخوانی متد save برای ذخیره GroupProperty همراه با PropertyValues
         GroupPropertyDto savedGroupProperty = groupPropertyService.save(groupPropertyDto);
-
-        // بازگشت به عنوان ResponseEntity با وضعیت 201 (Created)
         return new ResponseEntity<>(savedGroupProperty, HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<GroupPropertyDto>> getAllGroupProperties() {
-        List<GroupPropertyDto> groupProperties = groupPropertyService.findAll();
-
-        // بررسی اینکه آیا داده‌ای پیدا شده یا خیر
-        if (groupProperties.isEmpty()) {
-            return ResponseEntity.noContent().build(); // اگر لیست خالی است، 204 No Content را باز می‌گرداند
-        }
-
-        return ResponseEntity.ok(groupProperties); // در غیر این صورت 200 OK با داده‌ها را باز می‌گرداند
     }
 
     @PutMapping("/{uuid}")
@@ -51,29 +36,29 @@ public class GroupPropertyController {
         return ResponseEntity.ok(update);
     }
 
+    @DeleteMapping("/remove/{uuid}")
+    public ResponseEntity<Void> deleteGroupById(@PathVariable UUID uuid) {
+        groupPropertyService.logicalRemove(uuid);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GroupPropertyDto>> getAllGroupProperties() {
+        List<GroupPropertyDto> groupProperties = groupPropertyService.findAll();
+        if (groupProperties.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(groupProperties);
+    }
+
+    @GetMapping("/uuid/{uuid}")
+    public ResponseEntity<GroupPropertyDto> getGroupId(@PathVariable UUID uuid) {
+        return ResponseEntity.ok(groupPropertyService.getByUuid(uuid));
+    }
+
     @GetMapping("/value/{value}/groupName/{groupName}")
     public ResponseEntity<List<GroupPropertyDto>> getGroupPropertyByGroupNameAndValue(@PathVariable String value, @PathVariable String groupName) {
         List<GroupPropertyDto> groupProperties = groupPropertyService.getGroupNameAndPropertyValue(value, groupName);
         return ResponseEntity.ok(groupProperties);
     }
-//
-//    @DeleteMapping("/{uuid}")
-//    public ResponseEntity<Void> delete(@PathVariable UUID uuid) {
-//        groupPropertyService.delete(uuid);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//
-//    @GetMapping
-//    public ResponseEntity<List<GroupPropertyDto>> getGroupProperties() {
-//        List<GroupPropertyDto> groupPropertyDtos = groupPropertyService.findAll();
-//        return new ResponseEntity<>(groupPropertyDtos, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/{uuid}")
-//    public ResponseEntity<GroupPropertyDto> findById(@PathVariable UUID uuid) {
-//        GroupPropertyDto groupPropertyDto = groupPropertyService.findById(uuid);
-//        return ResponseEntity.ok(groupPropertyDto);
-//    }
-
 }

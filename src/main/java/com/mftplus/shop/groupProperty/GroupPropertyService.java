@@ -24,17 +24,16 @@ public class GroupPropertyService {
     private final GroupPropertyRepository groupPropertyRepository;
     private final GroupPropertyMapper groupPropertyMapper;
 
-    private final PropertyValueMapper propertyValueMapper;
     private final PropertyValueRepository propertyValueRepository;
     private final UuidMapper uuidMapper;
 
-    public GroupPropertyService(GroupPropertyRepository groupPropertyRepository, GroupPropertyMapper groupPropertyMapper, PropertyValueMapper propertyValueMapper, PropertyValueRepository propertyValueRepository, UuidMapper uuidMapper) {
+    public GroupPropertyService(GroupPropertyRepository groupPropertyRepository, GroupPropertyMapper groupPropertyMapper, PropertyValueRepository propertyValueRepository, UuidMapper uuidMapper) {
         this.groupPropertyRepository = groupPropertyRepository;
         this.groupPropertyMapper = groupPropertyMapper;
-        this.propertyValueMapper = propertyValueMapper;
         this.propertyValueRepository = propertyValueRepository;
         this.uuidMapper = uuidMapper;
     }
+
 
     @Transactional
     public GroupPropertyDto save(GroupPropertyDto groupPropertyDto) {
@@ -60,21 +59,6 @@ public class GroupPropertyService {
         return groupPropertyMapper.toDto(saved, "GroupProperty");
 
     }
-
-    @Transactional
-    public List<GroupPropertyDto> findAll() {
-        return groupPropertyRepository.findAll()
-                .stream()
-                .map(g -> groupPropertyMapper.toDto(g, "GroupProperty"))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public List<GroupPropertyDto> getGroupNameAndPropertyValue(String value, String groupName) {
-        List<GroupProperty> result = groupPropertyRepository.getGroupNameAndPropertyValue(value, groupName);
-        return groupPropertyMapper.toDtoList(result, "GroupProperty");
-    }
-
 
     @Transactional
     public GroupPropertyDto update(UUID uuid, GroupPropertyDto dto) {
@@ -111,6 +95,33 @@ public class GroupPropertyService {
 
         GroupProperty saved = groupPropertyRepository.save(entity);
         return groupPropertyMapper.toDto(saved, "GroupProperty");
+    }
+
+    public void logicalRemove(UUID uuid) {
+        Long groupPropertyId = uuidMapper.map(uuid, "GroupProperty");
+        groupPropertyRepository.logicalRemove(groupPropertyId);
+    }
+
+    @Transactional
+    public List<GroupPropertyDto> findAll() {
+        return groupPropertyRepository.findAll()
+                .stream()
+                .map(g -> groupPropertyMapper.toDto(g, "GroupProperty"))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public GroupPropertyDto getByUuid(UUID uuid) {
+        Long groupPropertyId = uuidMapper.map(uuid, "GroupProperty");
+        GroupProperty groupProperty = groupPropertyRepository.findById(groupPropertyId)
+                .orElseThrow(() -> new EntityNotFoundException("GroupProperty not found for UUID"));
+        return groupPropertyMapper.toDto(groupProperty, "GroupProperty");
+    }
+
+    @Transactional
+    public List<GroupPropertyDto> getGroupNameAndPropertyValue(String value, String groupName) {
+        List<GroupProperty> result = groupPropertyRepository.getGroupNameAndPropertyValue(value, groupName);
+        return groupPropertyMapper.toDtoList(result, "GroupProperty");
     }
 
 }
