@@ -1,11 +1,17 @@
 package com.mftplus.shop.groupProperty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mftplus.shop.productPropertyValue.PropertyValue;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -26,5 +32,11 @@ public class GroupProperty {
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "property_instance",foreignKey = @ForeignKey(name = "fk_instanceProperty"))
+    @JsonInclude(JsonInclude.Include.NON_NULL) // شامل کردن فقط در صورت غیر null بودن
+    @JsonIgnore
+    private List<PropertyValue> propertyValues = new ArrayList<>();
 
 }

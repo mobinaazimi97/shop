@@ -18,6 +18,4 @@ public class PropertyValueDto {
 
     private UUID id;
     private String value;
-    private UUID groupPropertyId;
-    private UUID productId;
 }

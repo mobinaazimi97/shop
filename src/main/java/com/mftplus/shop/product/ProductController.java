@@ -18,17 +18,17 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
-        ProductDto saveProductDto = productService.save(productDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saveProductDto);
-    }
-
-    @PutMapping("/{uuid}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable UUID uuid, @RequestBody ProductDto productDto) {
-        ProductDto updatedProductDto = productService.update(uuid, productDto);
-        return ResponseEntity.ok(updatedProductDto);
-    }
+//    @PostMapping
+//    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
+//        ProductDto saveProductDto = productService.save(productDto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(saveProductDto);
+//    }
+//
+//    @PutMapping("/{uuid}")
+//    public ResponseEntity<ProductDto> updateProduct(@PathVariable UUID uuid, @RequestBody ProductDto productDto) {
+//        ProductDto updatedProductDto = productService.update(uuid, productDto);
+//        return ResponseEntity.ok(updatedProductDto);
+//    }
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProducts() {
@@ -58,16 +58,16 @@ public class ProductController {
         return ResponseEntity.ok(productService.findByProductGroup(uuid));
     }
 
-    @GetMapping("/productGroups")
-    public ResponseEntity<List<ProductGroupDto>> getAllProductGroups() {
-        List<ProductGroupDto> groups = productService.getAllActiveGroups();
-
-        if (groups.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(groups);
-    }
+//    @GetMapping("/productGroups")
+//    public ResponseEntity<List<ProductGroupDto>> getAllProductGroups() {
+//        List<ProductGroupDto> groups = productService.getAllActiveGroups();
+//
+//        if (groups.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.ok(groups);
+//    }
 //For View Controller
     //@GetMapping("/products/new")
     //public String showCreateProductForm(Model model) {

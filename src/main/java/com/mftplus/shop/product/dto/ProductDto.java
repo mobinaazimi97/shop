@@ -22,5 +22,5 @@ public class ProductDto {
     private String code;
     private UUID productGroupId;
     private String productGroupTitle; // عنوان گروه محصول جدید
-    private List<PropertyValueDto> propertyValues; // لیست از PropertyValueDto
+//    private List<PropertyValueDto> propertyValues; // لیست از PropertyValueDto
 }

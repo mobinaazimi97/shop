@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,6 +15,9 @@ public interface GroupPropertyRepository extends JpaRepository<GroupProperty, Lo
 
     @Query("select g from groupProEntity g where g.groupName = :groupName")
     Optional<GroupProperty> findByName(@Param("groupName") String groupName);
+
+    @Query("select g from groupProEntity g cross join valueEntity v where v.value =:value and g.groupName=:groupName")
+    List<GroupProperty> getGroupNameAndPropertyValue(String value,String groupName);
 
     @Modifying
     @Query("update groupProEntity g set g.isDeleted=true where g.id= :id")

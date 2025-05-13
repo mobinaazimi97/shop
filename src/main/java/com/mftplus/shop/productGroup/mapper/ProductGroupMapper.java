@@ -17,6 +17,8 @@ import java.util.List;
 @Mapper(config = CentralMapperConfig.class, uses = {UuidMapper.class, ProductGroupRepository.class, GroupPropertyRepository.class})
 public interface ProductGroupMapper {
     @Mapping(target = "parentId", source = "parent.id")
+    @Mapping(target = "parentTitle", source = "parent.title")
+    @Mapping(target = "groupPropertyDto", source = "productGroup.groupProperty")
     ProductGroupDto toDto(ProductGroup productGroup, @Context String entityType);
 
     ProductGroup toEntity(ProductGroupDto productGroupDto, @Context String entityType);

@@ -46,15 +46,52 @@ public class PGController {
         return new ResponseEntity<>(productGroups, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductGroupDto> getProductGroupById(@PathVariable Long id) {
-        ProductGroupDto productGroupDto = productGroupService.findById(id);
-        return ResponseEntity.ok(productGroupDto);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<ProductGroupDto> getProductGroupById(@PathVariable Long id) {
+//        ProductGroupDto productGroupDto = productGroupService.findById(id);
+//        return ResponseEntity.ok(productGroupDto);
+//    }
 
     @GetMapping("/uuid/{uuid}")
     public ResponseEntity<ProductGroupDto> getProductGroup(@PathVariable UUID uuid) {
         return ResponseEntity.ok(productGroupService.getByUuid(uuid));
     }
 
+    @GetMapping("/title/{title}")
+    public ResponseEntity<List<ProductGroupDto>> getByTitle(@PathVariable String title) {
+        List<ProductGroupDto> productGroupDtos = productGroupService.getByTitle(title);
+        return ResponseEntity.ok(productGroupDtos);
+
+    }
+
+    @GetMapping("/parent/{parentId}")
+    public ResponseEntity<List<ProductGroupDto>> findByParentId(@PathVariable UUID parentId) {
+        List<ProductGroupDto> result = productGroupService.findByParentId(parentId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/parentTitle/{parentTitle}")
+    public ResponseEntity<List<ProductGroupDto>> getByParentTitle(@PathVariable String parentTitle) {
+        List<ProductGroupDto> result = productGroupService.findByParentTitle(parentTitle);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/groupName/{groupName}/value/{value}")
+    public ResponseEntity<List<ProductGroupDto>> getByGroupNameAndPropertyValue(
+            @PathVariable String groupName,
+            @PathVariable String value) {
+
+        List<ProductGroupDto> result = productGroupService.getProductGroupsByGroupNameAndPropertyValue(groupName, value);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/groupName/{groupName}/value/{value}/title/{title}")
+    public ResponseEntity<List<ProductGroupDto>> getByGroupNameAndPropertyValueAndTitle(
+            @PathVariable String groupName,
+            @PathVariable String value,
+            @PathVariable String title) {
+
+        List<ProductGroupDto> result = productGroupService.getProductGroupsByGroupNameAndPropertyValueAndTitle(groupName, value, title);
+        return ResponseEntity.ok(result);
+    }
 }

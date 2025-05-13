@@ -31,7 +31,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_name", length = 30,nullable = false,unique = true) //todo nullable...
+    @Column(name = "product_name", length = 30, nullable = false, unique = true) //todo nullable...
     private String productName;
 
     @Column(name = "price", length = 30)
@@ -41,12 +41,12 @@ public class Product {
     @Column(name = "serialId")
     private String code;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "productGroup_info")
     private ProductGroup productGroup;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PropertyValue> propertyValues = new ArrayList<>();
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<PropertyValue> propertyValues = new ArrayList<>();
 
 
     @Column(name = "is_deleted")
@@ -59,15 +59,15 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    public void addPropertyValue(PropertyValue propertyValue) {
-        propertyValues.add(propertyValue);
-        propertyValue.setProduct(this);
-    }
-
-    // متد برای حذف PropertyValue از Product
-    public void removePropertyValue(PropertyValue propertyValue) {
-        propertyValues.remove(propertyValue);
-        propertyValue.setProduct(null);
-    }
+//    public void addPropertyValue(PropertyValue propertyValue) {
+//        propertyValues.add(propertyValue);
+//        propertyValue.setProduct(this);
+//    }
+//
+//    // متد برای حذف PropertyValue از Product
+//    public void removePropertyValue(PropertyValue propertyValue) {
+//        propertyValues.remove(propertyValue);
+//        propertyValue.setProduct(null);
+//    }
 
 }

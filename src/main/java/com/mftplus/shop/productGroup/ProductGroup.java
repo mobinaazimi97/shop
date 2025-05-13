@@ -1,7 +1,6 @@
 package com.mftplus.shop.productGroup;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mftplus.shop.groupProperty.GroupProperty;
@@ -47,8 +46,9 @@ public class ProductGroup {
     private ProductGroup parent;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JsonProperty("groupProperty")
+//    @JsonProperty("groupProperty")
     @JoinColumn(name = "property_id", foreignKey = @ForeignKey(name = "fk_pGroup_group"))
+    @JsonInclude(JsonInclude.Include.NON_NULL) // شامل کردن فقط در صورت غیر null بودن
     private GroupProperty groupProperty;
 
 

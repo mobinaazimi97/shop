@@ -1,8 +1,5 @@
 package com.mftplus.shop.productPropertyValue;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mftplus.shop.groupProperty.GroupProperty;
-import com.mftplus.shop.product.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,23 +24,9 @@ public class PropertyValue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "propertyName")
-    private String propertyName;
-
-    @Column(name = "property_value")
+    @Column(name = "instance")
     private String value;
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
-
-    @ManyToOne
-    @JoinColumn(name = "product_info")
-    @JsonIgnore
-    private Product product;
-
-    @ManyToOne
-    @JoinColumn(name = "groupProperty_info")
-    @JsonIgnore
-    private GroupProperty groupProperty;
-
 }

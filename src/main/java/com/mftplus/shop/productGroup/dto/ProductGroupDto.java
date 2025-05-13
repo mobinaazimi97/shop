@@ -18,6 +18,7 @@ public class ProductGroupDto {
     private UUID id;
     private String title;
     private UUID parentId;
+    private String parentTitle;
     private List<UUID> childrenIds = new ArrayList<>();
     private GroupPropertyDto groupPropertyDto;
 }
