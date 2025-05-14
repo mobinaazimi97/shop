@@ -1,17 +1,13 @@
 package com.mftplus.shop.product;
 
 
-import com.mftplus.shop.groupProperty.GroupProperty;
 import com.mftplus.shop.groupProperty.GroupPropertyRepository;
 import com.mftplus.shop.product.dto.ProductDto;
 import com.mftplus.shop.product.mapper.ProductMapper;
 import com.mftplus.shop.productGroup.ProductGroup;
 import com.mftplus.shop.productGroup.ProductGroupRepository;
-import com.mftplus.shop.productGroup.dto.ProductGroupDto;
 import com.mftplus.shop.productGroup.mapper.ProductGroupMapper;
-import com.mftplus.shop.productPropertyValue.PropertyValue;
 import com.mftplus.shop.productPropertyValue.PropertyValueRepository;
-import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import com.mftplus.shop.productPropertyValue.mapper.PropertyValueMapper;
 import com.mftplus.shop.uuid.UuidMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -46,83 +42,53 @@ public class ProductService {
         this.productGroupMapper = productGroupMapper;
     }
 
-//    @Transactional
-//    public ProductDto save(ProductDto productDto) {
-//        // تبدیل ProductDto به Product entity
-//        Product product = productMapper.toEntity(productDto, "Product");
-//
-//        // تنظیم ProductGroup از طریق UUID
-//        if (productDto.getProductGroupId() != null) {
-//            Long groupId = uuidMapper.map(productDto.getProductGroupId(), "ProductGroup");
-//            ProductGroup productGroup = productGroupRepository.findById(groupId)
-//                    .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found"));
-//            product.setProductGroup(productGroup);
-//        }
-//
-//        // تبدیل PropertyValueDto ها به PropertyValue entity و اضافه کردن آن‌ها به Product
-//        if (productDto.getPropertyValues() != null && !productDto.getPropertyValues().isEmpty()) {
-//            List<PropertyValue> propertyValues = productDto.getPropertyValues().stream().map(pvDto -> {
-//                // تبدیل PropertyValueDto به PropertyValue
-//                PropertyValue value = propertyValueMapper.toEntity(pvDto, "PropertyValue");
-//
-//                // پیدا کردن GroupProperty از طریق UUID
-//                Long gpId = uuidMapper.map(pvDto.getGroupPropertyId(), "GroupProperty");
-//                GroupProperty groupProperty = groupPropertyRepository.findById(gpId)
-//                        .orElseThrow(() -> new EntityNotFoundException("GroupProperty not found"));
-//                value.setGroupProperty(groupProperty);
-//
-//                // اضافه کردن PropertyValue به Product
-//                product.addPropertyValue(value);
-//                return value;
-//            }).collect(Collectors.toList());
-//        }
-//
-//        // ذخیره کردن محصول و مرتبط کردن property ها
-//        Product saved = productRepository.save(product);
-//
-//        // تبدیل entity به DTO و برگرداندن نتیجه
-//        return productMapper.toDto(saved, "Product");
-//    }
 
-//    @Transactional
-//    public ProductDto update(UUID productUuid, ProductDto productDto) {
-//        // پیدا کردن موجودیت با UUID
-//        Long productId = uuidMapper.map(productUuid, "Product");
-//        Product existingProduct = productRepository.findById(productId)
-//                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
-//
-//        // آپدیت فیلدهای ساده با استفاده از مپپر
-//        productMapper.updateFromDto(productDto, existingProduct, "Product");
-//
-//        // آپدیت ProductGroup اگر تغییر کرده باشد
-//        if (productDto.getProductGroupId() != null) {
-//            Long groupId = uuidMapper.map(productDto.getProductGroupId(), "ProductGroup");
-//            ProductGroup productGroup = productGroupRepository.findById(groupId)
-//                    .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found"));
-//            existingProduct.setProductGroup(productGroup);
-//        }
-//
-//        // پاک‌کردن PropertyValueهای قبلی
-//        existingProduct.getPropertyValues().clear();
-//
-//        // اضافه کردن PropertyValueهای جدید
-//        if (productDto.getPropertyValues() != null && !productDto.getPropertyValues().isEmpty()) {
-//            for (PropertyValueDto pvDto : productDto.getPropertyValues()) {
-//                PropertyValue value = propertyValueMapper.toEntity(pvDto, "PropertyValue");
-//
-//                Long gpId = uuidMapper.map(pvDto.getGroupPropertyId(), "GroupProperty");
-//                GroupProperty groupProperty = groupPropertyRepository.findById(gpId)
-//                        .orElseThrow(() -> new EntityNotFoundException("GroupProperty not found"));
-//                value.setGroupProperty(groupProperty);
-//
-//                existingProduct.addPropertyValue(value);
-//            }
-//        }
-//
-//        // ذخیره و تبدیل به DTO
-//        Product saved = productRepository.save(existingProduct);
-//        return productMapper.toDto(saved, "Product");
-//    }
+    @Transactional
+    public ProductDto save(ProductDto productDto) {
+        Product product = productMapper.toEntity(productDto, "Product");
+
+        // تنظیم ProductGroup
+        if (productDto.getProductGroupId() != null) {
+            Long groupId = uuidMapper.map(productDto.getProductGroupId(), "ProductGroup");
+            ProductGroup productGroup = productGroupRepository.findById(groupId)
+                    .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found for id: " + groupId));
+            product.setProductGroup(productGroup);
+        } else {
+            product.setProductGroup(null);
+        }
+
+        // ذخیره
+        Product savedProduct = productRepository.save(product);
+
+        // تبدیل به DTO و بازگرداندن
+        return productMapper.toDto(savedProduct, "Product");
+    }
+
+    @Transactional
+    public ProductDto update(UUID uuid, ProductDto dto) {
+        Long productId = uuidMapper.map(uuid, "Product");
+
+        // یافتن محصول موجود
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+        // اعمال تغییرات از DTO به entity
+        productMapper.updateFromDto(dto, product, "Product");
+
+        // تنظیم ProductGroup اگر مقدار جدید داده شده
+        if (dto.getProductGroupId() != null) {
+            Long groupId = uuidMapper.map(dto.getProductGroupId(), "ProductGroup");
+            ProductGroup productGroup = productGroupRepository.findById(groupId)
+                    .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found"));
+            product.setProductGroup(productGroup);
+        } else {
+            product.setProductGroup(null);
+        }
+
+        // ذخیره و بازگرداندن DTO
+        Product saved = productRepository.save(product);
+        return productMapper.toDto(saved, "Product");
+    }
 
     public List<ProductDto> findAll() {
         List<Product> products = productRepository.findAll()
@@ -144,21 +110,18 @@ public class ProductService {
 
     public void logicalRemove(UUID uuid) {
         Long productId = uuidMapper.map(uuid, "Product");
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
-        product.setDeleted(true);
-        productRepository.save(product);
+        productGroupRepository.logicalRemove(productId);
 
     }
 
-    public List<ProductDto> findByProductGroup(UUID productGroupUuid) {
-        Long groupId = uuidMapper.map(productGroupUuid, "ProductGroup");
-        ProductGroup productGroup = productGroupRepository.findById(groupId)
-                .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found"));
+    //TODO debugging...
+//    @Transactional(readOnly = true)
+//    public ProductDto findByProductGroupId(UUID productGroupUuid) {
+//        Long groupId = uuidMapper.map(productGroupUuid, "ProductGroup");
+//        Product product = productRepository.findByProductGroupId(groupId).orElse(null);
+//        return productMapper.toDto(product, "Product");
+//    }
 
-        List<Product> products = productRepository.findByProductGroup(productGroup);
-        return productMapper.toDtoList(products, "Product");
-    }
 
 //    @Transactional
 //    public List<ProductGroupDto> getAllActiveGroups() {

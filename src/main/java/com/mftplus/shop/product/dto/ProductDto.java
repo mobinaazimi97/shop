@@ -1,11 +1,9 @@
 package com.mftplus.shop.product.dto;
 
-import com.mftplus.shop.productGroup.dto.ProductGroupDto;
-import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -20,7 +18,10 @@ public class ProductDto {
     private Float price;
     private String description;
     private String code;
+
+    @JsonIgnore
+    private boolean isDeleted;
+
     private UUID productGroupId;
     private String productGroupTitle; // عنوان گروه محصول جدید
-//    private List<PropertyValueDto> propertyValues; // لیست از PropertyValueDto
 }

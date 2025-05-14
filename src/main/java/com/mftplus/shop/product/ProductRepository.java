@@ -26,10 +26,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Transactional
     void logicalRemove(@Param("id") Long id);
 
-    @Query("SELECT p FROM productEntity p WHERE p.productGroup = :productGroup AND p.isDeleted = false")
-    List<Product> findByProductGroup(@Param("productGroup") ProductGroup productGroup);
+//    @Query("SELECT p FROM productEntity p WHERE p.productGroup = :productGroup")
+//    List<Product> findByProductGroup(@Param("productGroup") ProductGroup productGroup);
 
-    @Query("SELECT p FROM productEntity p WHERE p.productGroup.id = :id AND p.isDeleted = false")
-    Optional<Product> findByProductGroupId(@Param("id") Long id);
+    @Query("SELECT p FROM productEntity p WHERE p.productGroup.id = :productGroupId")
+    Optional<Product> findByProductGroupId(@Param("productGroupId") Long productGroupId);
+
 
 }

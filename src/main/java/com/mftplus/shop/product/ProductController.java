@@ -1,7 +1,6 @@
 package com.mftplus.shop.product;
 
 import com.mftplus.shop.product.dto.ProductDto;
-import com.mftplus.shop.productGroup.dto.ProductGroupDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +17,18 @@ public class ProductController {
         this.productService = productService;
     }
 
-//    @PostMapping
-//    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
-//        ProductDto saveProductDto = productService.save(productDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(saveProductDto);
-//    }
-//
-//    @PutMapping("/{uuid}")
-//    public ResponseEntity<ProductDto> updateProduct(@PathVariable UUID uuid, @RequestBody ProductDto productDto) {
-//        ProductDto updatedProductDto = productService.update(uuid, productDto);
-//        return ResponseEntity.ok(updatedProductDto);
-//    }
+    @PostMapping
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto productDto) {
+        ProductDto savedProduct = productService.save(productDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
+    }
+
+    @PutMapping("/{uuid}")
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable UUID uuid,
+                                                    @RequestBody ProductDto productDto) {
+        ProductDto updated = productService.update(uuid, productDto);
+        return ResponseEntity.ok(updated);
+    }
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProducts() {
@@ -47,27 +47,13 @@ public class ProductController {
         return ResponseEntity.ok(productService.getByUuid(uuid));
     }
 
-    @GetMapping("/productGroups/{uuid}")
-    public ResponseEntity<List<ProductDto>> getProductsByGroup(@PathVariable UUID uuid) {
-        List<ProductDto> products = productService.findByProductGroup(uuid);
-
-        if (products.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(productService.findByProductGroup(uuid));
-    }
-
-//    @GetMapping("/productGroups")
-//    public ResponseEntity<List<ProductGroupDto>> getAllProductGroups() {
-//        List<ProductGroupDto> groups = productService.getAllActiveGroups();
-//
-//        if (groups.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.ok(groups);
+    //TODO debugging...
+//    @GetMapping("/group/{productGroupUuid}")
+//    public ResponseEntity<ProductDto> getByProductGroupId(@PathVariable UUID productGroupUuid) {
+//        ProductDto result = productService.findByProductGroupId(productGroupUuid);
+//        return ResponseEntity.ok(result);
 //    }
+
 //For View Controller
     //@GetMapping("/products/new")
     //public String showCreateProductForm(Model model) {

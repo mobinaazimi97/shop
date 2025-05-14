@@ -2,7 +2,6 @@ package com.mftplus.shop.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mftplus.shop.productGroup.ProductGroup;
-import com.mftplus.shop.productPropertyValue.PropertyValue;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
@@ -10,10 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import org.hibernate.annotations.SQLRestriction;
 
 @NoArgsConstructor
 @Getter
@@ -24,8 +20,7 @@ import java.util.List;
 @Entity(name = "productEntity")
 @Table(name = "product_tbl")
 @Cacheable
-//@SQLRestriction("is_deleted=false")
-
+@SQLRestriction("is_deleted=false")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,13 +36,9 @@ public class Product {
     @Column(name = "serialId")
     private String code;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productGroup_info")
     private ProductGroup productGroup;
-
-//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<PropertyValue> propertyValues = new ArrayList<>();
-
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
