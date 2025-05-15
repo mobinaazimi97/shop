@@ -100,18 +100,19 @@ public class ProductService {
     }
 
     //TODO debugging...
-    @Transactional
-    public ProductDto findByProductGroupId(UUID productGroupId) {
-        Long groupId = uuidMapper.map(productGroupId, "ProductGroup");
-        Product product = productRepository.findByProductGroupId(groupId).orElse(null);
-        return productMapper.toDto(product, "Product");
-    }
+//    @Transactional
+//    public ProductDto findByProductGroupId(UUID productGroupId) {
+//        Long groupId = uuidMapper.map(productGroupId, "ProductGroup");
+//        Product product = productRepository.findByProductGroupId(groupId).orElse(null);
+//        return productMapper.toDto(product, "Product");
+//    }
 
-    @Transactional
-    public ProductDto findByProductGroupTitle(String productGroupTitle) {
-        Product result = productRepository.findByPGroupTitle(productGroupTitle).orElse(null);
-        return productMapper.toDto(result, "Product");
-    }
+    //TODO debugging...
+//    @Transactional
+//    public ProductDto findByProductGroupTitle(String productGroupTitle) {
+//        Product result = productRepository.findByPGroupTitle(productGroupTitle).orElse(null);
+//        return productMapper.toDto(result, "Product");
+//    }
 
 
 //    @Transactional

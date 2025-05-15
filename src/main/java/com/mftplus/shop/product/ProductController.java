@@ -49,8 +49,15 @@ public class ProductController {
 
     //TODO debugging...
 //    @GetMapping("/group/{productGroupUuid}")
-//    public ResponseEntity<ProductDto> getByProductGroupId(@PathVariable UUID productGroupUuid) {
-//        ProductDto result = productService.findByProductGroupId(productGroupUuid);
+//    public ResponseEntity<ProductDto> getByProductGroupId(@PathVariable UUID productGroupId) {
+//        ProductDto result = productService.findByProductGroupId(productGroupId);
+//        return ResponseEntity.ok(result);
+//    }
+
+    //TODO debugging...
+//    @GetMapping("/group/{title}")
+//    public ResponseEntity<ProductDto> getByProductGroupTile(@PathVariable String title) {
+//        ProductDto result = productService.findByProductGroupTitle(title);
 //        return ResponseEntity.ok(result);
 //    }
 
