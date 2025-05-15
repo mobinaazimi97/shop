@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mftplus.shop.groupProperty.GroupProperty;
-import com.mftplus.shop.productGroup.audit.listener.ChangeLoggerListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +19,9 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @ToString
-
 @Entity(name = "productGroupEntity")
 @Table(name = "productGroup_tbl")
 @Cacheable
-@EntityListeners(ChangeLoggerListener.class)
 public class ProductGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
