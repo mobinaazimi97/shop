@@ -1,16 +1,13 @@
 package com.mftplus.shop.product;
 
 
-import com.mftplus.shop.groupProperty.GroupPropertyRepository;
 import com.mftplus.shop.product.dto.ProductDto;
 import com.mftplus.shop.product.mapper.ProductMapper;
 import com.mftplus.shop.productGroup.ProductGroup;
 import com.mftplus.shop.productGroup.ProductGroupRepository;
-import com.mftplus.shop.productGroup.mapper.ProductGroupMapper;
-import com.mftplus.shop.productPropertyValue.PropertyValueRepository;
-import com.mftplus.shop.productPropertyValue.mapper.PropertyValueMapper;
 import com.mftplus.shop.uuid.UuidMapper;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,46 +18,34 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductGroupRepository productGroupRepository;
-    private final PropertyValueRepository propertyValueRepository;
-    private final GroupPropertyRepository groupPropertyRepository;
-    private final PropertyValueMapper propertyValueMapper;
     private final UuidMapper uuidMapper;
-    private final ProductGroupMapper productGroupMapper;
 
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper, ProductGroupRepository productGroupRepository, PropertyValueRepository propertyValueRepository, GroupPropertyRepository groupPropertyRepository, PropertyValueMapper propertyValueMapper, UuidMapper uuidMapper, ProductGroupMapper productGroupMapper) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper, ProductGroupRepository productGroupRepository, UuidMapper uuidMapper) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.productGroupRepository = productGroupRepository;
-        this.propertyValueRepository = propertyValueRepository;
-        this.groupPropertyRepository = groupPropertyRepository;
-        this.propertyValueMapper = propertyValueMapper;
         this.uuidMapper = uuidMapper;
-        this.productGroupMapper = productGroupMapper;
     }
 
 
     @Transactional
     public ProductDto save(ProductDto productDto) {
         Product product = productMapper.toEntity(productDto, "Product");
-
-        // تنظیم ProductGroup
         if (productDto.getProductGroupId() != null) {
             Long groupId = uuidMapper.map(productDto.getProductGroupId(), "ProductGroup");
             ProductGroup productGroup = productGroupRepository.findById(groupId)
-                    .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found for id: " + groupId));
+                    .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found for id: "));
             product.setProductGroup(productGroup);
         } else {
+
             product.setProductGroup(null);
         }
-
-        // ذخیره
         Product savedProduct = productRepository.save(product);
-
-        // تبدیل به DTO و بازگرداندن
         return productMapper.toDto(savedProduct, "Product");
     }
 
@@ -115,12 +100,18 @@ public class ProductService {
     }
 
     //TODO debugging...
-//    @Transactional(readOnly = true)
-//    public ProductDto findByProductGroupId(UUID productGroupUuid) {
-//        Long groupId = uuidMapper.map(productGroupUuid, "ProductGroup");
-//        Product product = productRepository.findByProductGroupId(groupId).orElse(null);
-//        return productMapper.toDto(product, "Product");
-//    }
+    @Transactional
+    public ProductDto findByProductGroupId(UUID productGroupId) {
+        Long groupId = uuidMapper.map(productGroupId, "ProductGroup");
+        Product product = productRepository.findByProductGroupId(groupId).orElse(null);
+        return productMapper.toDto(product, "Product");
+    }
+
+    @Transactional
+    public ProductDto findByProductGroupTitle(String productGroupTitle) {
+        Product result = productRepository.findByPGroupTitle(productGroupTitle).orElse(null);
+        return productMapper.toDto(result, "Product");
+    }
 
 
 //    @Transactional

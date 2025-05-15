@@ -9,12 +9,14 @@ import com.mftplus.shop.productGroup.ProductGroupService;
 import com.mftplus.shop.productGroup.dto.ProductGroupDto;
 import com.mftplus.shop.productPropertyValue.PropertyValueService;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@Slf4j
 public class TestProduct implements CommandLineRunner {
     private final ProductService productService;
     private final GroupPropertyService groupPropertyService;
@@ -32,6 +34,18 @@ public class TestProduct implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        PropertyValueDto propertyValueDto = PropertyValueDto.builder()
+                .value("128")
+                .build();
+
+        GroupPropertyDto groupPropertyDto = GroupPropertyDto.builder()
+                .groupName("memory")
+                .propertyValues(List.of(propertyValueDto))
+                .build();
+//      groupPropertyService.save(groupPropertyDto);
+//      log.info("saved group property {}",groupPropertyService.save(groupPropertyDto));
+
+
         ProductGroupDto electronicsDto = new ProductGroupDto();
         electronicsDto.setTitle("Electronics");
         ProductGroupDto savedElectronics = productGroupService.save(electronicsDto);
@@ -39,35 +53,26 @@ public class TestProduct implements CommandLineRunner {
         ProductGroupDto mobilePhonesDto = new ProductGroupDto();
         mobilePhonesDto.setTitle("Mobile Phones");
         mobilePhonesDto.setParentId(savedElectronics.getId());
+        mobilePhonesDto.setGroupPropertyDto(groupPropertyDto);
+        mobilePhonesDto.setGroupPropertyDto(groupPropertyDto);
         ProductGroupDto savedMobilePhones = productGroupService.save(mobilePhonesDto);
-        System.out.println("product group by id : "+productGroupService.findById(2L));
+        System.out.println(savedMobilePhones);
+        System.out.println("group and value :"+groupPropertyService.getGroupNameAndPropertyValue("128","memory"));
+////        System.out.println("product group by id : "+productGroupService.findById(2L));
 
-        GroupPropertyDto groupPropertyDto = GroupPropertyDto.builder()
-                .groupName("size") // فیلد 'name' به groupName در entity map میشه
-                .productGroupId(savedMobilePhones.getId())
-                .build();
-
-        GroupPropertyDto savedGroupProperty = groupPropertyService.save(groupPropertyDto);
-
-        System.out.println("groupPropertyDto saved: " + savedGroupProperty);
-
-
-        PropertyValueDto propertyValueDto = PropertyValueDto.builder()
-                .value("64")
-                .groupPropertyId(savedGroupProperty.getId())
-                .build();
-
-
+//
+//
         ProductDto productDto = ProductDto.builder()
                 .price(23F)
                 .productGroupId(savedMobilePhones.getId())
                 .productName("laptop")
                 .code("aasssas")
                 .description("this as laptop lenovo")
-                .propertyValues(List.of(propertyValueDto))
+                .productGroupId(savedMobilePhones.getId())
                 .build();
         productService.save(productDto);
-
+        System.out.println("Product group id found :"+productService.findByProductGroupId(savedMobilePhones.getId()));
+        System.out.println("Title Of PG : "+ productService.findByProductGroupTitle("Mobile Phones"));
     }
 
 }
