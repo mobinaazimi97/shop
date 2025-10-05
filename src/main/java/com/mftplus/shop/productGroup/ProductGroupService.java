@@ -4,11 +4,10 @@ package com.mftplus.shop.productGroup;
 import com.mftplus.shop.groupProperty.GroupProperty;
 import com.mftplus.shop.groupProperty.GroupPropertyRepository;
 import com.mftplus.shop.groupProperty.dto.GroupPropertyDto;
-import com.mftplus.shop.groupProperty.mapper.GroupPropertyMapper;
 import com.mftplus.shop.productGroup.dto.ProductGroupDto;
 import com.mftplus.shop.productGroup.mapper.ProductGroupMapper;
-import com.mftplus.shop.productPropertyValue.PropertyValue;
-import com.mftplus.shop.productPropertyValue.PropertyValueRepository;
+import com.mftplus.shop.productPropertyValue.entity.PropertyValue;
+import com.mftplus.shop.productPropertyValue.repository.PropertyValueRepository;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import com.mftplus.shop.uuid.UuidMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,16 +27,13 @@ public class ProductGroupService {
     private final ProductGroupRepository productGroupRepository;
     private final ProductGroupMapper productGroupMapper;
     private final GroupPropertyRepository groupPropertyRepository;
-    private final GroupPropertyMapper groupPropertyMapper;
     private final PropertyValueRepository propertyValueRepository;
     private final UuidMapper uuidMapper;
 
-
-    public ProductGroupService(ProductGroupRepository productGroupRepository, ProductGroupMapper productGroupMapper, GroupPropertyRepository groupPropertyRepository, GroupPropertyMapper groupPropertyMapper, PropertyValueRepository propertyValueRepository, UuidMapper uuidMapper) {
+    public ProductGroupService(ProductGroupRepository productGroupRepository, ProductGroupMapper productGroupMapper, GroupPropertyRepository groupPropertyRepository, PropertyValueRepository propertyValueRepository, UuidMapper uuidMapper) {
         this.productGroupRepository = productGroupRepository;
         this.productGroupMapper = productGroupMapper;
         this.groupPropertyRepository = groupPropertyRepository;
-        this.groupPropertyMapper = groupPropertyMapper;
         this.propertyValueRepository = propertyValueRepository;
         this.uuidMapper = uuidMapper;
     }
@@ -47,7 +43,6 @@ public class ProductGroupService {
     public ProductGroupDto save(ProductGroupDto productGroupDto) {
         ProductGroup entity = productGroupMapper.toEntity(productGroupDto, "ProductGroup");
 
-        // 1. تنظیم parent اگر وجود دارد
         if (productGroupDto.getParentId() != null) {
             Long parentId = uuidMapper.map(productGroupDto.getParentId(), "ProductGroup");
             ProductGroup parent = productGroupRepository.findById(parentId)
@@ -55,26 +50,22 @@ public class ProductGroupService {
             entity.setParent(parent);
         }
 
-        // 2. تنظیم groupProperty اگر وجود دارد
         if (productGroupDto.getGroupPropertyDto() != null) {
             GroupPropertyDto groupPropertyDto = productGroupDto.getGroupPropertyDto();
 
             GroupProperty groupPropertyEntity;
 
             if (groupPropertyDto.getId() != null) {
-                // موجود است، واکشی کن
                 Long groupPropertyId = uuidMapper.map(groupPropertyDto.getId(), "GroupProperty");
                 groupPropertyEntity = groupPropertyRepository.findById(groupPropertyId)
                         .orElseThrow(() -> new EntityNotFoundException("Group property not found"));
             } else {
-                // جدید است، بساز
                 groupPropertyEntity = new GroupProperty();
             }
 
             groupPropertyEntity.setGroupName(groupPropertyDto.getGroupName());
             groupPropertyEntity.setDeleted(false);
 
-            // 3. ذخیره PropertyValues (در صورت وجود)
             List<PropertyValue> propertyValues = new ArrayList<>();
             if (groupPropertyDto.getPropertyValues() != null) {
                 for (PropertyValueDto pvDto : groupPropertyDto.getPropertyValues()) {
@@ -97,12 +88,10 @@ public class ProductGroupService {
                 groupPropertyEntity.setPropertyValues(propertyValues);
             }
 
-            // ذخیره groupProperty
             groupPropertyRepository.save(groupPropertyEntity);
             entity.setGroupProperty(groupPropertyEntity);
         }
 
-        // 4. ذخیره ProductGroup
         ProductGroup saved = productGroupRepository.save(entity);
         return productGroupMapper.toDto(saved, "ProductGroup");
     }
@@ -114,10 +103,8 @@ public class ProductGroupService {
         ProductGroup entity = productGroupRepository.findById(entityId)
                 .orElseThrow(() -> new EntityNotFoundException("ProductGroup not found for UUID: " + uuid));
 
-        // به‌روزرسانی فیلدهای ساده (title و ...)
         productGroupMapper.updateFromDto(dto, entity, "ProductGroup");
 
-        // به‌روزرسانی parent (در صورت وجود)
         if (dto.getParentId() != null) {
             Long parentId = uuidMapper.map(dto.getParentId(), "ProductGroup");
             ProductGroup parent = productGroupRepository.findById(parentId)
@@ -127,7 +114,6 @@ public class ProductGroupService {
             entity.setParent(null);
         }
 
-        // به‌روزرسانی groupProperty (در صورت وجود)
         if (dto.getGroupPropertyDto() != null) {
             GroupPropertyDto groupPropertyDto = dto.getGroupPropertyDto();
             GroupProperty groupProperty;
@@ -140,11 +126,9 @@ public class ProductGroupService {
                 groupProperty = new GroupProperty();
             }
 
-            // تنظیم مقادیر groupProperty
             groupProperty.setGroupName(groupPropertyDto.getGroupName());
             groupProperty.setDeleted(false);
 
-            // به‌روزرسانی PropertyValues
             if (groupPropertyDto.getPropertyValues() != null) {
                 List<PropertyValue> propertyValues = new ArrayList<>();
                 for (PropertyValueDto pvDto : groupPropertyDto.getPropertyValues()) {
@@ -182,19 +166,13 @@ public class ProductGroupService {
                 .collect(Collectors.toList());
     }
 
-//    @Transactional
-//    public ProductGroupDto findById(Long id) {
-//        ProductGroup productGroup = productGroupRepository.findById(id).orElse(null);
-//        return productGroupMapper.toDto(productGroup, "ProductGroup");
-//    }
-
     @Transactional
     public ProductGroupDto getByUuid(UUID uuid) {
-        Long productGroupId = uuidMapper.map(uuid, "ProductGroup"); // تبدیل UUID به Long ID
+        Long productGroupId = uuidMapper.map(uuid, "ProductGroup");
         ProductGroup productGroup = productGroupRepository.findById(productGroupId)
                 .orElseThrow(() -> new EntityNotFoundException("Product group not found for UUID"));
 
-        return productGroupMapper.toDto(productGroup, "ProductGroup"); // تبدیل entity به DTO با UUID
+        return productGroupMapper.toDto(productGroup, "ProductGroup");
     }
 
     @Transactional(readOnly = true)
@@ -209,6 +187,7 @@ public class ProductGroupService {
         List<ProductGroup> result = productGroupRepository.findByParentTitle(parentTitle);
         return productGroupMapper.toDtoList(result, "ProductGroup");
     }
+
     @Transactional
     public List<ProductGroupDto> getByTitle(String title) {
         return productGroupRepository.findByTitle(title)

@@ -3,7 +3,6 @@ package com.mftplus.shop.groupProperty.mapper;
 import com.mftplus.shop.config.CentralMapperConfig;
 import com.mftplus.shop.groupProperty.GroupProperty;
 import com.mftplus.shop.groupProperty.dto.GroupPropertyDto;
-
 import com.mftplus.shop.productPropertyValue.mapper.PropertyValueMapper;
 import com.mftplus.shop.uuid.UuidMapper;
 import org.mapstruct.Context;

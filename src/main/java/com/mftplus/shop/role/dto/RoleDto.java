@@ -2,7 +2,6 @@ package com.mftplus.shop.role.dto;
 
 
 import com.mftplus.shop.permission.dto.PermissionDto;
-import com.mftplus.shop.permission.entity.Permission;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

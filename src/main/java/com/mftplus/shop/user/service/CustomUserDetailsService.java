@@ -1,6 +1,6 @@
 package com.mftplus.shop.user.service;
 
-import com.mftplus.shop.user.entity.CustomUserDetails;
+import com.mftplus.shop.user.login.CustomUserDetails;
 import com.mftplus.shop.user.entity.User;
 import com.mftplus.shop.user.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

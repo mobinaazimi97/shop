@@ -1,6 +1,6 @@
 package com.mftplus.shop.inventory.repository;
 
-import com.mftplus.shop.inventory.Inventory;
+import com.mftplus.shop.inventory.entity.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

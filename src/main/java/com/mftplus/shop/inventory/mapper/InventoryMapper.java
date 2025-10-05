@@ -2,10 +2,13 @@ package com.mftplus.shop.inventory.mapper;
 
 import com.mftplus.shop.InventoryProduct.mapper.InventoryProductMapper;
 import com.mftplus.shop.config.CentralMapperConfig;
-import com.mftplus.shop.inventory.Inventory;
+import com.mftplus.shop.inventory.entity.Inventory;
 import com.mftplus.shop.inventory.dto.InventoryDto;
 import com.mftplus.shop.uuid.UuidMapper;
-import org.mapstruct.*;
+import org.mapstruct.Context;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 

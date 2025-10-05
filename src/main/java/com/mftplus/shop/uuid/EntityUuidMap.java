@@ -12,7 +12,6 @@ import java.util.UUID;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-
 @Entity(name = "uuIdEntity")
 @Table(name = "entity_uuid_map")
 public class EntityUuidMap {

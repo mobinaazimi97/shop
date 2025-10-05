@@ -107,6 +107,15 @@ public class ProductService {
 //        return productMapper.toDto(product, "Product");
 //    }
 
+    //TODO : test *
+    //@Transactional
+    //    public ProductDto findByProductGroupId(UUID productGroupId) {
+    //        Long groupId = uuidMapper.map(productGroupId, "ProductGroup");
+    //        ProductGroup productGroup = productGroupRepository.findById(groupId).orElseThrow(() -> new EntityNotFoundException("ProductGroup not found In : PRODUCT"));
+    //        Product product = productRepository.findByProductGroupId(productGroup.getId()).orElse(null);
+    //        return productMapper.toDto(product, "Product");
+    //    }
+
     //TODO debugging...
 //    @Transactional
 //    public ProductDto findByProductGroupTitle(String productGroupTitle) {

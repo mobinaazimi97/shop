@@ -1,6 +1,5 @@
 package com.mftplus.shop.groupProperty.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

@@ -1,7 +1,6 @@
 package com.mftplus.shop.InventoryProduct.dto;
 
 import com.mftplus.shop.inventoryTransaction.dto.TransactionDto;
-import jakarta.persistence.Column;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

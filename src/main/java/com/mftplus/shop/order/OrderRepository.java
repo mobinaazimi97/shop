@@ -1,6 +1,9 @@
 package com.mftplus.shop.order;
 
+import com.mftplus.shop.order.entity.Order;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -37,7 +40,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate);
 
+    @Modifying
+    @Query("update orderEntity o set o.deleted=true where o.id= :id")
+    @Transactional
+    void logicalRemove(@Param("id") Long id);
 
+    List<Order> findAllByOrderDateBetween(LocalDate from, LocalDate to);
 
-
+    List<Order> findAllByAmountGreaterThanEqual(double minAmount);
 }

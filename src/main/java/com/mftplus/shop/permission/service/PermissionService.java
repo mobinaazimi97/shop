@@ -1,11 +1,10 @@
 package com.mftplus.shop.permission.service;
 
-import com.mftplus.shop.config.CacheEvictLevel;
-import com.mftplus.shop.config.CacheableLevel;
 import com.mftplus.shop.permission.dto.PermissionDto;
 import com.mftplus.shop.permission.entity.Permission;
 import com.mftplus.shop.permission.mapper.PermissionMapper;
 import com.mftplus.shop.permission.repository.PermissionRepository;
+import com.mftplus.shop.uuid.UuidMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +18,13 @@ import java.util.stream.Collectors;
 public class PermissionService {
     private final PermissionRepository permissionRepository;
     private final PermissionMapper permissionMapper;
+    private final UuidMapper uuidMapper;
 
     @Transactional
     public PermissionDto save(PermissionDto permissionDto) {
         Permission permission = permissionMapper.toEntity(permissionDto, "Permission");
-        return permissionMapper.toDto(permissionRepository.save(permission), "Permission");
+        Permission saved = permissionRepository.save(permission);
+        return permissionMapper.toDto(saved, "Permission");
     }
 
     @Transactional

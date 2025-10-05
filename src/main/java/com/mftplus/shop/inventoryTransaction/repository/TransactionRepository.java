@@ -1,6 +1,6 @@
 package com.mftplus.shop.inventoryTransaction.repository;
 
-import com.mftplus.shop.inventoryTransaction.InventoryTransaction;
+import com.mftplus.shop.inventoryTransaction.entity.InventoryTransaction;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

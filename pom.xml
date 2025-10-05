@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
+        <version>3.2.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mftplus</groupId>
-    <artifactId>shop</artifactId>
+    <artifactId>shopTwo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>shop</name>
-    <description>shop</description>
+    <name>shopTwo</name>
+    <description>shopTwo</description>
     <url/>
     <licenses>
         <license/>
@@ -117,6 +117,17 @@
 <!--            <groupId>org.springframework.boot</groupId>-->
 <!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>6.6.1.Final</version> <!-- یا نسخه‌ای مطابق Hibernate ORM در Spring Boot 3.4 -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.3.2.Final</version> <!-- متناسب با Spring Boot 3.2.5 -->
+        </dependency>
 
     </dependencies>
 

@@ -1,6 +1,6 @@
 package com.mftplus.shop.InventoryProduct.mapper;
 
-import com.mftplus.shop.InventoryProduct.InventoryProduct;
+import com.mftplus.shop.InventoryProduct.entity.InventoryProduct;
 import com.mftplus.shop.InventoryProduct.dto.InventoryProductDto;
 import com.mftplus.shop.config.CentralMapperConfig;
 import com.mftplus.shop.inventory.mapper.InventoryMapper;
@@ -29,7 +29,8 @@ public interface InventoryProductMapper {
 
     @Mapping(target = "product", ignore = true) // چون دستی در Service ست می‌کنی
     @Mapping(target = "inventory", ignore = true)
-    @Mapping(target = "transactions", ignore = true) // چون باید برای این‌ها دستی د
+    @Mapping(target = "transactions", ignore = true)
+        // چون باید برای این‌ها دستی د
     InventoryProduct toEntity(InventoryProductDto inventoryProductDto, @Context String entityType);
 
     List<InventoryProductDto> toDtoList(List<InventoryProduct> inventoryProductList, @Context String entityType);

@@ -2,7 +2,7 @@ package com.mftplus.shop.groupProperty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mftplus.shop.productPropertyValue.PropertyValue;
+import com.mftplus.shop.productPropertyValue.entity.PropertyValue;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

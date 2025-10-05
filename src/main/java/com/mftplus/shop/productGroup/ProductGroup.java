@@ -36,16 +36,14 @@ public class ProductGroup {
     private List<ProductGroup> childList = new ArrayList<>();
 
     @ManyToOne
-    @JsonInclude(JsonInclude.Include.NON_NULL) // شامل کردن فقط در صورت غیر null بودن
-//    @JsonIgnoreProperties({"propertyValues"})
-    @JsonProperty("parentId") // به صورت parent نمایش داده شود
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("parentId")
     @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_parent_group"))
     private ProductGroup parent;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-//    @JsonProperty("groupProperty")
     @JoinColumn(name = "property_id", foreignKey = @ForeignKey(name = "fk_pGroup_group"))
-    @JsonInclude(JsonInclude.Include.NON_NULL) // شامل کردن فقط در صورت غیر null بودن
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GroupProperty groupProperty;
 
 

@@ -2,8 +2,8 @@ package com.mftplus.shop.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,8 @@ public class CacheEvictLevelAspect {
     public CacheEvictLevelAspect(CacheManager cacheManager) {
         this.cacheManager = cacheManager;
     }
-    @Before("execution(* com.mftplus.shop.service..*.*(..))")
+
+    @Around("execution(* com.mftplus..*.*(..))")
     public void clearCache(JoinPoint joinPoint) {
         Class<?> clazz = joinPoint.getTarget().getClass();
         CacheEvictLevel annotation = clazz.getAnnotation(CacheEvictLevel.class);
@@ -35,5 +36,4 @@ public class CacheEvictLevelAspect {
             log.warn("Cache [{}] not found to clear!", cacheName);
         }
     }
-//--
 }

@@ -1,7 +1,7 @@
 package com.mftplus.shop.productPropertyValue.mapper;
 
 import com.mftplus.shop.config.CentralMapperConfig;
-import com.mftplus.shop.productPropertyValue.PropertyValue;
+import com.mftplus.shop.productPropertyValue.entity.PropertyValue;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
 import com.mftplus.shop.uuid.UuidMapper;
 import org.mapstruct.Context;

@@ -2,7 +2,7 @@ package com.mftplus.shop.inventoryTransaction.mapper;
 
 import com.mftplus.shop.InventoryProduct.mapper.InventoryProductMapper;
 import com.mftplus.shop.config.CentralMapperConfig;
-import com.mftplus.shop.inventoryTransaction.InventoryTransaction;
+import com.mftplus.shop.inventoryTransaction.entity.InventoryTransaction;
 import com.mftplus.shop.inventoryTransaction.dto.TransactionDto;
 import com.mftplus.shop.uuid.UuidMapper;
 import org.mapstruct.Context;

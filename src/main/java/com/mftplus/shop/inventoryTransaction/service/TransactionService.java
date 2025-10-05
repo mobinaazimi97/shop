@@ -1,8 +1,8 @@
 package com.mftplus.shop.inventoryTransaction.service;
 
-import com.mftplus.shop.InventoryProduct.InventoryProduct;
+import com.mftplus.shop.InventoryProduct.entity.InventoryProduct;
 import com.mftplus.shop.InventoryProduct.repository.InventoryProductRepository;
-import com.mftplus.shop.inventoryTransaction.InventoryTransaction;
+import com.mftplus.shop.inventoryTransaction.entity.InventoryTransaction;
 import com.mftplus.shop.inventoryTransaction.dto.TransactionDto;
 import com.mftplus.shop.inventoryTransaction.mapper.InventoryTransactionMapper;
 import com.mftplus.shop.inventoryTransaction.repository.TransactionRepository;

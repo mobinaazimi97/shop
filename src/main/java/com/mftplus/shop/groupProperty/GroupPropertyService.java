@@ -3,10 +3,9 @@ package com.mftplus.shop.groupProperty;
 
 import com.mftplus.shop.groupProperty.dto.GroupPropertyDto;
 import com.mftplus.shop.groupProperty.mapper.GroupPropertyMapper;
-import com.mftplus.shop.productPropertyValue.PropertyValue;
-import com.mftplus.shop.productPropertyValue.PropertyValueRepository;
+import com.mftplus.shop.productPropertyValue.entity.PropertyValue;
+import com.mftplus.shop.productPropertyValue.repository.PropertyValueRepository;
 import com.mftplus.shop.productPropertyValue.dto.PropertyValueDto;
-import com.mftplus.shop.productPropertyValue.mapper.PropertyValueMapper;
 import com.mftplus.shop.uuid.UuidMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;

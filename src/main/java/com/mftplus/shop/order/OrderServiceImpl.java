@@ -1,5 +1,6 @@
 package com.mftplus.shop.order;
 
+import com.mftplus.shop.order.entity.Order;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

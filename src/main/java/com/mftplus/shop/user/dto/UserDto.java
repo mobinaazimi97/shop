@@ -1,10 +1,10 @@
 package com.mftplus.shop.user.dto;
 
 import com.mftplus.shop.role.dto.RoleDto;
-import com.mftplus.shop.role.entity.Role;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,5 +20,5 @@ public class UserDto {
     private String username;
     private String password;
     private String email;
-    private Set<RoleDto> roleSet;
+    private Set<RoleDto> roleSet = new HashSet<>();
 }

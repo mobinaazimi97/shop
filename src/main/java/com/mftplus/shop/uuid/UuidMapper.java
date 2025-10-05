@@ -3,7 +3,6 @@ package com.mftplus.shop.uuid;
 import com.mftplus.shop.config.CentralMapperConfig;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
-import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
